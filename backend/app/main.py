@@ -3,9 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import Base, engine
 
-from app.routers.fuel import router as fuel_router
-
-Base.metadata.create_all(bind=engine)
+from app.routers.fuel_record import router as fuel_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
