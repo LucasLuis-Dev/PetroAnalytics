@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import Base, engine
 
+from app.routers.fuel import router as fuel_router
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -17,6 +19,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(fuel_router, prefix="/api/fuel-records", tags=["Fuel Records"])
 
 
 @app.get("/")
