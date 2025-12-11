@@ -1,0 +1,19 @@
+<div id="container">
+    <div class="head-box">
+        <fa-icon [icon]="faFilter" />
+        <span>Filtros</span>
+    </div>
+    
+    <div class="filters-box">
+        <p-select [options]=[]  optionLabel="name" placeholder="Todos os Combustíveis" size="large" class="filter-select" />
+        <p-select [options]=[]  optionLabel="name" placeholder="Todas as Cidades" size="large" class="filter-select" />
+        <p-select [options]=[]  optionLabel="name" placeholder="Todos os Veículos" size="large" class="filter-select" />
+        <p-iconfield>
+            <p-inputicon class="pi pi-search"  />
+            <input class="filter-select" type="text" pInputText placeholder="Buscar por nome ou CPF" pSize="large" />
+        </p-iconfield>
+        <button class="submit-button">
+            Aplicar
+        </button>
+    </div>
+</div>

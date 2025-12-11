@@ -1,0 +1,20 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    padding: 2% 10%;
+    background-color: #F9FAFB;
+    gap: 3rem;
+
+    & .title-box {
+        display: flex;
+        flex-direction: column;
+
+        & .title {
+            font-size: 3rem;
+        }
+
+        & .sub-title {
+            font-size: 1.4rem;
+        }
+    }
+}

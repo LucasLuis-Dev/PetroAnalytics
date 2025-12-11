@@ -10,6 +10,10 @@
         gap: 1rem;
         align-items: center;
 
+        & img {
+            width: 4.5rem;
+        }
+
         & .logo-name-box {
             display: flex;
             flex-direction: column;
