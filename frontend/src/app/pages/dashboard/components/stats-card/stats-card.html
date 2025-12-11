@@ -1,0 +1,24 @@
+<p-card class="stats-card-box">
+  <div class="stats-card-content">
+    <div class="stats-info">
+      <h3 class="stats-title">{{ title }}</h3>
+      <p class="stats-value">{{ value }}</p>
+      
+      @if (change) {
+        <div class="stats-change">
+            <span 
+            class="change-badge" 
+            [ngClass]="'change-' + change.type">
+            {{ change.value }}
+            </span>
+            <span class="change-label">{{ change.label }}</span>
+        </div>
+      }
+      
+    </div>
+    
+    <div class="stats-icon" [style.background-color]="iconColor">
+      <fa-icon [icon]="icon" size="lg"></fa-icon>
+    </div>
+  </div>
+</p-card>
