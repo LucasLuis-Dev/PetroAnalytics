@@ -4,6 +4,7 @@ from typing import Optional
 
 from app.database import get_db
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordResponse, FuelRecordList
+from app.schemas.driver_history import DriverHistoryFilter
 from app.services.fuel_record_service import FuelRecordService
 
 router = APIRouter()
@@ -35,3 +36,15 @@ def list_fuel_records(
         city=city,
         vehicle_type=vehicle_type,
     )
+
+@router.get("/drivers-history", response_model=list[FuelRecordResponse], summary="Driver fueling history report")
+def get_driver_history(
+    filters: DriverHistoryFilter = Depends(),
+    db: Session = Depends(get_db)
+):
+    records = FuelRecordService.get_driver_history(
+        db=db,
+        cpf=filters.cpf,
+        name=filters.name,
+    )
+    return records

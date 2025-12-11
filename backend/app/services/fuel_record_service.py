@@ -1,6 +1,7 @@
 from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+from typing import List
 
 from app.models.fuel_record import FuelRecord
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordList, FuelRecordResponse
@@ -47,3 +48,25 @@ class FuelRecordService:
             page_size=page_size,
             records=records,
         )
+
+    @staticmethod
+    def get_driver_history(
+        db: Session,
+        cpf: Optional[str] = None,
+        name: Optional[str] = None,
+    ) -> List[FuelRecord]:
+        query = db.query(FuelRecord)
+
+        if cpf:
+            digits = "".join(filter(str.isdigit, cpf))
+            query = query.filter(FuelRecord.driver_cpf == digits)
+
+        if name:
+            ilike_pattern = f"%{name}%"
+            query = query.filter(FuelRecord.driver_name.ilike(ilike_pattern))
+
+        return (
+            query.order_by(FuelRecord.collection_datetime.desc())
+            .all()
+        )
+    

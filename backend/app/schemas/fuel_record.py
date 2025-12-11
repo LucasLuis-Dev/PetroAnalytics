@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
 from typing import List
-from validate_docbr import CPF
+from app.utils.validators import validate_cpf, normalize_string
 
 class FuelRecordCreate(BaseModel):
     station_identifier: str = Field(..., max_length=20)
@@ -22,17 +22,18 @@ class FuelRecordCreate(BaseModel):
 
     @field_validator("driver_cpf")
     @classmethod
-    def validade_cpf(cls, v: str) -> str:
-        cpf = CPF()
-        digits = "".join(filter(str.isdigit, v))
-        if not cpf.validade(digits):
-            raise ValueError("Invalid CPF")
-        return digits
-    
+    def validate_driver_cpf(cls, v: str) -> str:
+        return validate_cpf(v)
+
     @field_validator("state")
     @classmethod
     def upper_state(cls, v: str) -> str:
         return v.upper()
+
+    @field_validator("driver_name", "station_name")
+    @classmethod
+    def normalize_names(cls, v: str) -> str:
+        return normalize_string(v) or v
     
 
 class FuelRecordResponse(BaseModel):
