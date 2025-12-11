@@ -1,0 +1,42 @@
+#container {
+    display: flex;
+    justify-content: space-between;
+    height: 10rem;
+    align-items: center;
+    padding: 0rem 10%;
+
+    & .logo-box {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        & .logo-name-box {
+            display: flex;
+            flex-direction: column;
+
+            & span {
+                font-weight: 700;
+            }
+        }
+    }
+
+    & .user-info-box {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        & .username-box {
+            display: flex;
+            flex-direction: column;
+
+            & span {
+                font-weight: 500;
+            }
+        }
+    }
+
+    & .sub-title {
+        font-weight: 300;
+        font-size: 1.3rem;
+    }
+}
