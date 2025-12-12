@@ -6,7 +6,7 @@ import {
   faDroplet,
   faUsers 
 } from '@fortawesome/free-solid-svg-icons';
-import { StatsCard } from '../stats-card/stats-card';
+import { StatsCard } from '../../../../shared/components/stats-card/stats-card';
 
 @Component({
   selector: 'app-dashboard-stats',

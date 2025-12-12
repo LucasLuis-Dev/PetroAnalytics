@@ -1,0 +1,8 @@
+<div id="container">
+    @for (item of legendItems; track item) {
+        <div class="legend-item" >
+            <span class="legend-color" [style.background-color]="item.color"></span>
+            <span class="legend-label">{{ item.label }}</span>
+        </div>
+    }
+</div>
