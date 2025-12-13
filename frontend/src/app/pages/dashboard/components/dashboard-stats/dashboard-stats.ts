@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   faGasPump, 
@@ -7,6 +7,7 @@ import {
   faUsers 
 } from '@fortawesome/free-solid-svg-icons';
 import { StatsCard } from '../../../../shared/components/stats-card/stats-card';
+import { DashboardFacade } from '../../facades/dashboard.facade';
 
 @Component({
   selector: 'app-dashboard-stats',
@@ -15,15 +16,16 @@ import { StatsCard } from '../../../../shared/components/stats-card/stats-card';
   styleUrl: './dashboard-stats.scss',
 })
 export class DashboardStats {
+  facade = inject(DashboardFacade);
   faGasPump = faGasPump;
   faDollarSign = faDollarSign;
   faDroplet = faDroplet;
   faUsers = faUsers;
 
-   stats = [
+  stats = computed(() => [
     {
       title: 'Total de Abastecimentos',
-      value: '1.234',
+      value: this.facade.totalRefuels().toLocaleString('pt-BR'),
       icon: this.faGasPump,
       iconColor: '#0f766e',
       change: {
@@ -34,18 +36,18 @@ export class DashboardStats {
     },
     {
       title: 'Média Preço/Litro',
-      value: 'R$ 5,89',
+      value: `R$ ${this.facade.avgPricePerLiter().toFixed(2).replace('.', ',')}`,
       icon: this.faDollarSign,
       iconColor: '#0284c7',
       change: {
         value: '3.2%',
-        label: 'gasolina comum',
+        label: this.facade.avgPriceFuelType() || 'média geral',
         type: 'negative' as const
       }
     },
     {
       title: 'Consumo Total',
-      value: '45.678 L',
+      value: `${this.facade.totalConsumption().toLocaleString('pt-BR', { maximumFractionDigits: 2 })} L`,
       icon: this.faDroplet,
       iconColor: '#f59e0b',
       change: {
@@ -56,7 +58,7 @@ export class DashboardStats {
     },
     {
       title: 'Motoristas Ativos',
-      value: '89',
+      value: this.facade.activeDrivers().toString(),
       icon: this.faUsers,
       iconColor: '#0ea5e9',
       change: {
@@ -65,5 +67,5 @@ export class DashboardStats {
         type: 'positive' as const
       }
     }
-  ];
+  ]);
 }

@@ -6,25 +6,40 @@
     & .table-header {
         display: flex;
         justify-content: space-between;
+        gap: 1rem;
         align-items: center;
         padding-bottom: 1.5rem;
         border-bottom: 1px solid var(--surface-border);
 
-        & .header-title {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-        
-                .header-icon {
-                    font-size: 1.8rem;
-                }
-        
-                h2 {
-                    font-size: 1.8rem;
-                    font-weight: 600;
-                    margin: 0;
-                }
+        & .header-icon {
+            width: 4.8rem;
+            height: 4.8rem;
+            background: #A8E7B6;
+            background: linear-gradient(315deg, #A8E7B6, #326F9B);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            fa-icon {
+            font-size: 1.7rem;
+            color: white;
             }
+        }
+
+        & .header-text {
+            flex: 1;
+            
+            h3 {
+                font-size: 1.6rem;
+                font-weight: 600;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                margin: 0;
+            }
+        }
     }
     
     // Customização da tabela

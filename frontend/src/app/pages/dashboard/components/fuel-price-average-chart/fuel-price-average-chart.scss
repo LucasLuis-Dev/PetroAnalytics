@@ -1,16 +1,9 @@
 .chart-card-box {
-    height: 100%;
-    padding: .75rem;
-
-    ::ng-deep .p-card-body, ::ng-deep .p-card-content {
-       height: 100%;
-    }
-
-    ::ng-deep .p-card-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+  height: 100%;
+  
+  ::ng-deep .p-card-body {
+    padding: 1.5rem;
+  }
 
     & .chart-header {
         display: flex;
@@ -50,9 +43,24 @@
     }
 
     & .chart-container {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 1.5rem;
+        height: 400px;
+        padding: 0 1rem;
     }
+
+    .loading-state {
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
 }
+
+
+
+
+
+
+
+

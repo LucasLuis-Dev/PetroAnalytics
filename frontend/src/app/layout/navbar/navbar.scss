@@ -11,20 +11,6 @@
         gap: 1rem;
         align-items: center;
 
-        & .icon-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            // background-color: #F9C8A8;
-            background: #A8E7B6;
-            background: linear-gradient(315deg, #A8E7B6, #326F9B);
-            width: 7rem;
-            height: 100%;
-            font-size: 4rem;
-            border-radius: 1rem;
-            color: white;
-        }
-
         & .logo-name-box {
             display: flex;
             flex-direction: column;

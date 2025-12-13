@@ -4,7 +4,7 @@
       <h3 class="stats-title">{{ title }}</h3>
       <p class="stats-value">{{ value }}</p>
       
-      @if (change) {
+      <!-- @if (change) {
         <div class="stats-change">
             <span 
             class="change-badge" 
@@ -13,11 +13,11 @@
             </span>
             <span class="change-label">{{ change.label }}</span>
         </div>
-      }
+      } -->
       
     </div>
     
-    <div class="stats-icon" [style.background-color]="iconColor">
+    <div class="stats-icon">
       <fa-icon [icon]="icon" size="lg"></fa-icon>
     </div>
   </div>

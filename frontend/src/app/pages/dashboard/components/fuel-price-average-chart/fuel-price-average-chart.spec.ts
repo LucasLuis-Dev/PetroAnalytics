@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PriceEvolutionChart } from './price-evolution-chart';
+import { FuelPriceAverageChart } from './fuel-price-average-chart';
 
-describe('PriceEvolutionChart', () => {
-  let component: PriceEvolutionChart;
-  let fixture: ComponentFixture<PriceEvolutionChart>;
+describe('FuelPriceAverageChart', () => {
+  let component: FuelPriceAverageChart;
+  let fixture: ComponentFixture<FuelPriceAverageChart>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PriceEvolutionChart]
+      imports: [FuelPriceAverageChart]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PriceEvolutionChart);
+    fixture = TestBed.createComponent(FuelPriceAverageChart);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

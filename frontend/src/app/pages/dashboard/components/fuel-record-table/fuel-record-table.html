@@ -1,8 +1,11 @@
 <p-card class="records-table-card-box">
   <div class="table-header">
-    <div class="header-title">
-        <fa-icon [icon]="faTable" class="header-icon"></fa-icon>
-        <h2>Registros de Abastecimento</h2>
+    <div class="header-icon">
+      <fa-icon [icon]="faTable"></fa-icon>
+    </div>
+    <div class="header-text">
+      <h3>Registros de Abastecimento</h3>
+      <p class="subtitle">{{facade.fuelRecordsTotal()}} registros encontrados</p>
     </div>
   </div>
 

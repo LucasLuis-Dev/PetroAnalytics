@@ -61,7 +61,9 @@
     .stats-icon {
         width: 3.5rem;
         height: 3.5rem;
-        border-radius: 0.5rem;
+        border-radius: 1rem;
+        background: #A8E7B6;
+        background: linear-gradient(315deg, #A8E7B6, #326F9B);
         display: flex;
         align-items: center;
         justify-content: center;

@@ -1,17 +1,22 @@
 <p-card class="chart-card-box">
     <div class="chart-header">
-        <fa-icon [icon]="faPieChart" class="chart-icon"></fa-icon>
-        <h3>Consumo por Tipo de Veículo</h3>
+        <div class="header-icon">
+            <fa-icon [icon]="faPieChart"></fa-icon>
+        </div>
+        <div class="header-text">
+            <h3>Consumo por Tipo de Veículo</h3>
+            <p class="subtitle">Distribuição percentual</p>
+        </div>
     </div>
     
     <div class="chart-container">
         <p-chart 
         type="doughnut" 
-        [data]="chartData" 
+        [data]="chartData()" 
         [options]="chartOptions"
         height="300px">
         </p-chart>
     </div>
 
-    <app-chart-legend [legendItems]="legendItems"></app-chart-legend>
+    <app-chart-legend [legendItems]="legendItems()"></app-chart-legend>
 </p-card>
