@@ -3,7 +3,7 @@ import { DashboardApi } from '../services/dashboard.api';
 import { VehicleVolumeItem } from '../../../shared/models/vehicle-volume-totals.model';
 import { FuelPriceAverageItem } from '../../../shared/models/fuel-price-averages.model';
 import { FuelRecord } from '../../../shared/models/fuel-records.model';
-import { FilterOption } from '../../../shared/models/dashboard-filter.model';
+import { DashboardFilters, FilterOption } from '../../../shared/models/dashboard-filter.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardFacade {
@@ -31,10 +31,19 @@ export class DashboardFacade {
   loadingFilterOptions = signal(false);
   loadingSummary = signal(false);
 
+  filtersDashboard = signal<DashboardFilters>({});
+
+  hasActiveFilters = computed(() => {
+    const f = this.filtersDashboard();
+    return !!(f.fuel_type || f.state || f.city || f.vehicle_type);
+  });
+
   loadSummary() {
     this.loadingSummary.set(true);
 
-    this.api.getFuelSummary().subscribe({
+    const filters = this.filtersDashboard();
+
+    this.api.getFuelSummary(filters).subscribe({
       next: res => {
         this.totalVolume.set(res.total_volume);
         this.totalAmount.set(res.total_amount);
@@ -106,16 +115,58 @@ export class DashboardFacade {
     this.fuelRecordsPage.set(page);
     this.fuelRecordsPageSize.set(pageSize);
 
-    this.api.getFuelRecords({ page, page_size: pageSize }).subscribe({
+    const filters = this.filtersDashboard();
+
+    this.api.getFuelRecords({
+      page,
+      page_size: pageSize,
+      ...filters 
+    }).subscribe({
       next: res => {
         this.fuelRecords.set(res.records);
         this.fuelRecordsTotal.set(res.total);
-        const uniqueDrivers = new Set(res.records.map(r => r.driver_cpf)).size;
-        this.activeDrivers.set(uniqueDrivers);
       },
       error: () => this.loadingRecords.set(false),
       complete: () => this.loadingRecords.set(false),
     });
+  }
+
+  applyFilters(filters: {
+    fuelType?: string | null;
+    state?: string | null;
+    city?: string | null;
+    vehicleType?: string | null;
+  }) {
+
+    const activeFilters: DashboardFilters= {};
+
+    if (filters.fuelType) {
+      activeFilters.fuel_type = filters.fuelType;
+    }
+    if (filters.state) {
+      activeFilters.state = filters.state;
+    }
+    if (filters.city) {
+      activeFilters.city = filters.city;
+    }
+    if (filters.vehicleType) {
+      activeFilters.vehicle_type = filters.vehicleType;
+    }
+
+    if (Object.keys(activeFilters).length === 0) {
+      return;
+    }
+
+    this.filtersDashboard.set(activeFilters);
+
+    this.loadSummary();
+    this.loadFuelRecords(1);
+  }
+
+  clearFilters() {
+    this.filtersDashboard.set({});
+    this.loadSummary();
+    this.loadFuelRecords(1);
   }
 
   loadDriverHistory(cpf?: string, name?: string) {

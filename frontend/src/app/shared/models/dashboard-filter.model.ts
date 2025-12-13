@@ -1,9 +1,8 @@
 export interface DashboardFilters {
-  fuelType?: string;
+  fuel_type?: string;
   state?: string;
   city?: string;
-  vehicleType?: string;
-  searchTerm?: string;
+  vehicle_type?: string;
 }
 
 export interface FilterOption {

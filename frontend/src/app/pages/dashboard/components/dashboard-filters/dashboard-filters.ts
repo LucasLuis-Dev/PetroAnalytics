@@ -48,10 +48,22 @@ export class DashboardFilters implements OnInit {
     }
 
     const formValue = this.filterForm.value;
+
+    this.facade.applyFilters({
+      fuelType: formValue.fuelType,
+      state: formValue.state,
+      city: formValue.city,
+      vehicleType: formValue.vehicleType
+    });
   }
 
   clearFilters() {
+    if (!this.facade.hasActiveFilters()) {
+      return;
+    }
+
     this.filterForm.reset();
+    this.facade.clearFilters();
   }
 
   get searchTermControl() {

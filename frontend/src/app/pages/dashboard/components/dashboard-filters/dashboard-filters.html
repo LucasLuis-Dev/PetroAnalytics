@@ -26,7 +26,7 @@
             optionLabel="label"
             optionValue="value"
             placeholder="Todas os Estados"
-            formControlName="city"
+            formControlName="state"
             [showClear]="true"
             class="filter-select">
         </p-select>
@@ -59,7 +59,7 @@
             Aplicar
         </button>
 
-        <button class="clear-filter-button" (click)="clearFilters()">
+        <button type="button" class="clear-filter-button" (click)="clearFilters()">
             <fa-icon [icon]="faClose"></fa-icon>
         </button>
     </form>
