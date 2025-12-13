@@ -3,7 +3,7 @@ from sqlalchemy import func
 from typing import List
 
 from app.models.fuel_record import FuelRecord
-from app.schemas.kpi import FuelPriceAverage, VehicleVolumeTotal
+from app.schemas.kpi import FuelPriceAverage, VehicleVolumeTotal, StateVolume, StateVolumeList
 
 class KPIService:
 
@@ -36,3 +36,25 @@ class KPIService:
             VehicleVolumeTotal(vehicle_type=row.vehicle_type, total_volume=round(row.total_volume, 2), records_count=row.records_count)
             for row in results
         ]
+    
+    @staticmethod
+    def get_state_volumes(db: Session) -> StateVolumeList:
+        results = (
+            db.query(
+                FuelRecord.state,
+                func.sum(FuelRecord.sold_volume).label("total_volume"),
+            )
+            .group_by(FuelRecord.state)
+            .order_by(FuelRecord.state)
+            .all()
+        )
+
+        items = [
+            StateVolume(
+                state=row.state,
+                total_volume=float(row.total_volume),
+            )
+            for row in results
+        ]
+
+        return StateVolumeList(items=items)

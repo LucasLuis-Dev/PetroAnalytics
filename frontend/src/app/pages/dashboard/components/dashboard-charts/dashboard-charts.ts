@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ConsumptionChart } from '../consumption-chart/consumption-chart';
 import { FuelPriceAverageChart } from '../fuel-price-average-chart/fuel-price-average-chart';
+import { VolumeByStateChart } from '../volume-by-state-chart/volume-by-state-chart';
 
 @Component({
   selector: 'app-dashboard-charts',
-  imports: [ConsumptionChart, FuelPriceAverageChart],
+  imports: [ConsumptionChart, FuelPriceAverageChart, VolumeByStateChart],
   templateUrl: './dashboard-charts.html',
   styleUrl: './dashboard-charts.scss',
 })

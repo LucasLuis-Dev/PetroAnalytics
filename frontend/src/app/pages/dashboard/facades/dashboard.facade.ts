@@ -4,6 +4,7 @@ import { VehicleVolumeItem } from '../../../shared/models/vehicle-volume-totals.
 import { FuelPriceAverageItem } from '../../../shared/models/fuel-price-averages.model';
 import { FuelRecord } from '../../../shared/models/fuel-records.model';
 import { DashboardFilters, FilterOption } from '../../../shared/models/dashboard-filter.model';
+import { VolumeByStateItem } from '../../../shared/models/volume-by-state.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardFacade {
@@ -13,6 +14,8 @@ export class DashboardFacade {
   statesOptions = signal<FilterOption[]>([]);
   cityOptions = signal<FilterOption[]>([]);
   vehicleTypeOptions = signal<FilterOption[]>([]);
+
+  volumeByState = signal<VolumeByStateItem[]>([]);
 
   vehicleVolume = signal<VehicleVolumeItem[]>([]);
   fuelPriceAverages = signal<FuelPriceAverageItem[]>([]);
@@ -107,6 +110,14 @@ export class DashboardFacade {
 
     this.api.getFuelPriceAverages().subscribe({
       next: res => this.fuelPriceAverages.set(res.items),
+    });
+
+    this.api.getVolumeByState().subscribe({
+      next: res => {
+        this.volumeByState.set(res.items);
+        this.loadingKpis.set(false);
+      },
+      error: () => this.loadingKpis.set(false),
     });
   }
 

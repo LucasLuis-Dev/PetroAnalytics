@@ -16,3 +16,10 @@ class FuelPriceAverageList(BaseModel):
 
 class VehicleVolumeTotalList(BaseModel):
     items: List[VehicleVolumeTotal]
+
+class StateVolume(BaseModel):
+    state: str
+    total_volume: float
+
+class StateVolumeList(BaseModel):
+    items: List[StateVolume]
