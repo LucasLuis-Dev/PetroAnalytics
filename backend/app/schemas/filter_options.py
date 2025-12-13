@@ -6,3 +6,4 @@ class FilterOptions(BaseModel):
     fuel_types: List[str]
     vehicle_types: List[str]
     cities: List[str]
+    states: List[str]

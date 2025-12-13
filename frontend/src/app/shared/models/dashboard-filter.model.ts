@@ -1,5 +1,6 @@
 export interface DashboardFilters {
   fuelType?: string;
+  state?: string;
   city?: string;
   vehicleType?: string;
   searchTerm?: string;

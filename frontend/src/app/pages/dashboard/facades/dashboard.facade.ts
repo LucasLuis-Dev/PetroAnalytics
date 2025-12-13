@@ -10,6 +10,7 @@ export class DashboardFacade {
   private api = inject(DashboardApi);
 
   fuelTypeOptions = signal<FilterOption[]>([]);
+  statesOptions = signal<FilterOption[]>([]);
   cityOptions = signal<FilterOption[]>([]);
   vehicleTypeOptions = signal<FilterOption[]>([]);
 
@@ -62,6 +63,13 @@ export class DashboardFacade {
           res.fuel_types.map(ft => ({ 
             label: ft, 
             value: ft 
+          }))
+        );
+
+        this.statesOptions.set(
+          res.states.map(state => ({ 
+            label: state, 
+            value: state 
           }))
         );
 

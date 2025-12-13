@@ -10,7 +10,7 @@
     </div>
     
     <form [formGroup]="filterForm" class="filters-box" (ngSubmit)="applyFilters()">
-        <!-- Select de Combustíveis -->
+
         <p-select 
             [options]="facade.fuelTypeOptions()"
             optionLabel="label"
@@ -20,8 +20,17 @@
             [showClear]="true"
             class="filter-select">
         </p-select>
+
+        <p-select 
+            [options]="facade.statesOptions()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Todas os Estados"
+            formControlName="city"
+            [showClear]="true"
+            class="filter-select">
+        </p-select>
         
-        <!-- Select de Cidades -->
         <p-select 
             [options]="facade.cityOptions()"
             optionLabel="label"
@@ -32,7 +41,6 @@
             class="filter-select">
         </p-select>
         
-        <!-- Select de Veículos -->
         <p-select 
             [options]="facade.vehicleTypeOptions()"
             optionLabel="label"
@@ -42,30 +50,6 @@
             [showClear]="true"
             class="filter-select">
         </p-select>
-        
-        <div class="search-field-wrapper">
-            <p-iconfield style="display: flex; height: 100%;">
-                <p-inputicon class="pi pi-search" />
-                <input 
-                    class="filter-select" 
-                    type="text" 
-                    pInputText 
-                    placeholder="Buscar por nome ou CPF"
-                    formControlName="searchTerm"
-                    [class.p-invalid]="showCpfError"
-                    [mask]="isCpfMode ? '000.000.000-00' : ''"
-                    [dropSpecialCharacters]="false"
-                    [showMaskTyped]="false"
-                    pSize="large" />
-            </p-iconfield>
-            
-            @if (showCpfError) {
-                <small class="error-message">
-                    <i class="pi pi-exclamation-circle"></i>
-                    CPF inválido. Digite um CPF válido ou busque por nome.
-                </small>
-            }
-        </div>
         
         <button 
             type="submit"

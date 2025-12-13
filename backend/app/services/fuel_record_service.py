@@ -91,10 +91,17 @@ class FuelRecordService:
             .order_by(FuelRecord.city)
             .all()
         )
+
+        states = (
+            db.query(distinct(FuelRecord.state))
+            .order_by(FuelRecord.state)
+            .all()
+        )
         
         return FilterOptions(
             fuel_types=[row[0] for row in fuel_types],
             vehicle_types=[row[0] for row in vehicle_types],
             cities=[row[0] for row in cities],
+            states=[row[0] for row in states],
         )
     

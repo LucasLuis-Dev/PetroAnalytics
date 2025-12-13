@@ -11,17 +11,26 @@ fake = Faker("pt_BR")
 
 FUEL_TYPES = ["Gasolina", "Etanol", "Diesel S10"]
 VEHICLE_TYPES = ["Carro", "Moto", "Caminhão Leve", "Carreta", "Ônibus"]
-CITIES = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Recife", "Brasília"]
+CITY_STATE = {
+    "São Paulo": "SP",
+    "Rio de Janeiro": "RJ",
+    "Belo Horizonte": "MG",
+    "Recife": "PE",
+    "Brasília": "DF",
+}
 
 def generate_record() -> FuelRecord:
     days_ago = random.randint(0, 30)
     collection_datetime = datetime.now() - timedelta(days=days_ago)
 
+    city = random.choice(list(CITY_STATE.keys()))
+    state = CITY_STATE[city]
+
     return FuelRecord(
         station_identifier=fake.cnpj(),
         station_name=f"Posto {fake.company()}",
-        city=random.choice(CITIES),
-        state="SP",
+        city=city,
+        state=state,
         collection_datetime=collection_datetime,
         fuel_type=random.choice(FUEL_TYPES),
         sale_price=round(random.uniform(4.5, 7.0), 2),
