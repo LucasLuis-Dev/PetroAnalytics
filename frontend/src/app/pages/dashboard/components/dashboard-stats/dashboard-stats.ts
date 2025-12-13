@@ -25,47 +25,27 @@ export class DashboardStats {
   stats = computed(() => [
     {
       title: 'Total de Abastecimentos',
-      value: this.facade.totalRefuels().toLocaleString('pt-BR'),
+      value: this.facade.totalFillings().toLocaleString('pt-BR'),
       icon: this.faGasPump,
-      iconColor: '#0f766e',
-      change: {
-        value: '+12.5%',
-        label: 'este mês',
-        type: 'positive' as const
-      }
+      iconColor: '#0f766e'
     },
     {
       title: 'Valor Total Gasto',
-      value: `R$ ${this.facade.totalSpent().toFixed(2).replace('.', ',')}`,
+      value: `R$ ${this.facade.totalAmount().toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: this.faDollarSign,
-      iconColor: '#0284c7',
-      change: {
-        value: '3.2%',
-        label: this.facade.totalSpent() || 'média geral',
-        type: 'negative' as const
-      }
+      iconColor: '#0284c7'
     },
     {
       title: 'Consumo Total',
-      value: `${this.facade.totalConsumption().toLocaleString('pt-BR', { maximumFractionDigits: 2 })} L`,
+      value: `${this.facade.totalVolume().toLocaleString('pt-BR', { maximumFractionDigits: 2 })} L`,
       icon: this.faDroplet,
-      iconColor: '#f59e0b',
-      change: {
-        value: '+8.1%',
-        label: 'no período',
-        type: 'positive' as const
-      }
+      iconColor: '#f59e0b'
     },
     {
       title: 'Motoristas Ativos',
       value: this.facade.activeDrivers().toString(),
       icon: this.faUsers,
-      iconColor: '#0ea5e9',
-      change: {
-        value: '+5%',
-        label: 'cadastrados',
-        type: 'positive' as const
-      }
+      iconColor: '#0ea5e9'
     }
   ]);
 }

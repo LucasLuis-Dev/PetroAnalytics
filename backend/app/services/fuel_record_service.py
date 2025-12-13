@@ -1,11 +1,12 @@
 from typing import Optional
 from sqlalchemy.orm import Session
-from sqlalchemy import distinct
+from sqlalchemy import distinct, func
 from typing import List
 
 from app.models.fuel_record import FuelRecord
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordList
 from app.schemas.filter_options import FilterOptions
+from app.schemas.fuel_summary import FuelSummary
 
 
 class FuelRecordService:
@@ -103,5 +104,57 @@ class FuelRecordService:
             vehicle_types=[row[0] for row in vehicle_types],
             cities=[row[0] for row in cities],
             states=[row[0] for row in states],
+        )
+    
+
+    @staticmethod
+    def get_summary(
+        db: Session,
+        fuel_type: Optional[str] = None,
+        state: Optional[str] = None,
+        city: Optional[str] = None,
+        vehicle_type: Optional[str] = None,
+    ) -> FuelSummary:
+        query = db.query(FuelRecord)
+
+        if fuel_type:
+            query = query.filter(FuelRecord.fuel_type == fuel_type)
+        if state:
+            query = query.filter(FuelRecord.state == state)
+        if city:
+            query = query.filter(FuelRecord.city == city)
+        if vehicle_type:
+            query = query.filter(FuelRecord.vehicle_type == vehicle_type)
+
+        total_volume = (
+            db.query(func.coalesce(func.sum(FuelRecord.sold_volume), 0.0))
+            .select_from(query.subquery())
+            .scalar()
+        )
+
+        total_amount = (
+            db.query(
+                func.coalesce(
+                    func.sum(FuelRecord.sold_volume * FuelRecord.sale_price),
+                    0.0,
+                )
+            )
+            .select_from(query.subquery())
+            .scalar()
+        )
+
+        active_drivers = (
+            db.query(func.count(distinct(FuelRecord.driver_cpf)))
+            .select_from(query.subquery())
+            .scalar()
+        )
+
+        total_fillings = query.count()
+
+        return FuelSummary(
+            total_volume=float(total_volume),
+            total_amount=float(total_amount),
+            active_drivers=int(active_drivers),
+            total_fillings=int(total_fillings),
         )
     

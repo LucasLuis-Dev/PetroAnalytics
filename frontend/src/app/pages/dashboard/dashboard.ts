@@ -14,6 +14,7 @@ import { DashboardFacade } from './facades/dashboard.facade';
 export class Dashboard implements OnInit {
   facade = inject(DashboardFacade);
   ngOnInit(): void {
+    this.facade.loadSummary();
     this.facade.loadKpis();
     this.facade.loadFuelRecords();
   }

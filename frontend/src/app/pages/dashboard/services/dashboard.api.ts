@@ -5,6 +5,7 @@ import { VehicleVolumeResponse } from '../../../shared/models/vehicle-volume-tot
 import { FuelPriceAverageResponse } from '../../../shared/models/fuel-price-averages.model';
 import { FuelRecordsResponse, FuelRecord } from '../../../shared/models/fuel-records.model';
 import { FilterOptionsResponse } from '../../../shared/models/filter-options.model';
+import { FuelSummary } from '../../../shared/models/fuel-summary.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardApi {
@@ -30,6 +31,15 @@ export class DashboardApi {
     vehicle_type?: string;
   }): Observable<FuelRecordsResponse> {
     return this.http.get<FuelRecordsResponse>('/fuel-records/', params);
+  }
+
+  getFuelSummary(params?: {
+    fuel_type?: string;
+    city?: string;
+    state?: string;
+    vehicle_type?: string;
+  }): Observable<FuelSummary> {
+    return this.http.get<FuelSummary>('/fuel-records/summary', params);
   }
 
   getDriverHistory(params: {

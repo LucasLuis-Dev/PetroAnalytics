@@ -21,38 +21,30 @@ export class DashboardFacade {
   fuelRecordsPage = signal(1);
   fuelRecordsPageSize = signal(10);
 
+  totalVolume = signal(0);
+  totalAmount = signal(0);
+  activeDrivers = signal(0);
+  totalFillings = signal(0);
+
   loadingKpis = signal(false);
   loadingRecords = signal(false);
   loadingFilterOptions = signal(false);
+  loadingSummary = signal(false);
 
-  totalRefuels = computed(() => {
-    const volumes = this.vehicleVolume();
-    return volumes.reduce((sum, item) => sum + item.records_count, 0);
-  });
+  loadSummary() {
+    this.loadingSummary.set(true);
 
-  avgPricePerLiter = computed(() => {
-    const prices = this.fuelPriceAverages();
-    if (prices.length === 0) return 0;
-    
-    const total = prices.reduce((sum, item) => sum + item.average_price, 0);
-    return total / prices.length;
-  });
-
-  totalSpent = computed(() => {
-    const records = this.fuelRecords();
-    if (records.length === 0) return 0;
-    
-    return records.reduce((total, record) => {
-      return total + (record.sale_price * record.sold_volume);
-    }, 0);
-  });
-
-  totalConsumption = computed(() => {
-    const volumes = this.vehicleVolume();
-    return volumes.reduce((sum, item) => sum + item.total_volume, 0);
-  });
-
-  activeDrivers = signal(0);
+    this.api.getFuelSummary().subscribe({
+      next: res => {
+        this.totalVolume.set(res.total_volume);
+        this.totalAmount.set(res.total_amount);
+        this.activeDrivers.set(res.active_drivers);
+        this.totalFillings.set(res.total_fillings);
+      },
+      error: () => this.loadingSummary.set(false),
+      complete: () => this.loadingSummary.set(false),
+    });
+  }
 
   loadFilterOptions() {
     this.loadingFilterOptions.set(true);

@@ -6,6 +6,7 @@ from app.database import get_db
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordResponse, FuelRecordList
 from app.schemas.driver_history import DriverHistoryFilter
 from app.schemas.filter_options import FilterOptions
+from app.schemas.fuel_summary import FuelSummary
 from app.services.fuel_record_service import FuelRecordService
 
 
@@ -51,6 +52,22 @@ def get_driver_history(
     )
     return records
 
-@router.get('/filter-options', response_model=FilterOptions, summary="Get available filter options")
+@router.get("/filter-options", response_model=FilterOptions, summary="Get available filter options")
 def get_filter_options(db: Session = Depends(get_db)):
     return FuelRecordService.get_filter_options(db)
+
+@router.get("/summary", response_model=FuelSummary, summary="Fuel summary with filters")
+def get_fuel_summary(
+    fuel_type: Optional[str] = None,
+    city: Optional[str] = None,
+    state: Optional[str] = None,
+    vehicle_type: Optional[str] = None,
+    db: Session = Depends(get_db),
+) -> FuelSummary:
+    return FuelRecordService.get_summary(
+        db=db,
+        fuel_type=fuel_type,
+        state=state,
+        city=city,
+        vehicle_type=vehicle_type,
+    )
