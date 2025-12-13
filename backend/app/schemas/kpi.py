@@ -23,3 +23,12 @@ class StateVolume(BaseModel):
 
 class StateVolumeList(BaseModel):
     items: List[StateVolume]
+
+
+class TopStationVolume(BaseModel):
+    station_identifier: str
+    station_name: str
+    total_volume: float
+
+class TopStationVolumeList(BaseModel):
+    items: List[TopStationVolume]

@@ -5,6 +5,7 @@ import { FuelPriceAverageItem } from '../../../shared/models/fuel-price-averages
 import { FuelRecord } from '../../../shared/models/fuel-records.model';
 import { DashboardFilters, FilterOption } from '../../../shared/models/dashboard-filter.model';
 import { VolumeByStateItem } from '../../../shared/models/volume-by-state.model';
+import { TopStationItem } from '../../../shared/models/top-station.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardFacade {
@@ -16,9 +17,10 @@ export class DashboardFacade {
   vehicleTypeOptions = signal<FilterOption[]>([]);
 
   volumeByState = signal<VolumeByStateItem[]>([]);
-
+  topStations = signal<TopStationItem[]>([]);
   vehicleVolume = signal<VehicleVolumeItem[]>([]);
   fuelPriceAverages = signal<FuelPriceAverageItem[]>([]);
+
   fuelRecords = signal<FuelRecord[]>([]);
   fuelRecordsTotal = signal(0);
   fuelRecordsPage = signal(1);
@@ -110,6 +112,8 @@ export class DashboardFacade {
 
     this.api.getFuelPriceAverages().subscribe({
       next: res => this.fuelPriceAverages.set(res.items),
+      error: () => this.loadingKpis.set(false),
+      complete: () => this.loadingKpis.set(false),
     });
 
     this.api.getVolumeByState().subscribe({
@@ -118,6 +122,16 @@ export class DashboardFacade {
         this.loadingKpis.set(false);
       },
       error: () => this.loadingKpis.set(false),
+      complete: () => this.loadingKpis.set(false),
+    });
+
+    this.api.getTopStationsByVolume().subscribe({
+      next: res => {
+        this.topStations.set(res.items);
+        this.loadingKpis.set(false);
+      }, 
+      error: () => this.loadingKpis.set(false),
+      complete: () => this.loadingKpis.set(false),
     });
   }
 

@@ -7,6 +7,7 @@ import { FuelRecordsResponse, FuelRecord } from '../../../shared/models/fuel-rec
 import { FilterOptionsResponse } from '../../../shared/models/filter-options.model';
 import { FuelSummary } from '../../../shared/models/fuel-summary.model';
 import { VolumeByStateResponse } from '../../../shared/models/volume-by-state.model';
+import { TopStationsResponse } from '../../../shared/models/top-station.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardApi {
@@ -52,5 +53,9 @@ export class DashboardApi {
 
   getVolumeByState(): Observable<VolumeByStateResponse> {
     return this.http.get<VolumeByStateResponse>('/kpis/state-volumes');
+  }
+
+  getTopStationsByVolume(): Observable<TopStationsResponse> {
+    return this.http.get<TopStationsResponse>('/kpis/top-stations-by-volume');
   }
 }

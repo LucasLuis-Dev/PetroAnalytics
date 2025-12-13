@@ -1,0 +1,28 @@
+<p-card class="chart-card-box">
+  <div class="chart-header">
+    <div class="header-icon">
+      <fa-icon [icon]="faGasPump"></fa-icon>
+    </div>
+    <div class="header-text">
+      <h3>Top 5 Postos</h3>
+      <p class="subtitle">Postos com maior volume de combustível</p>
+    </div>
+  </div>
+  
+  @if (chartData()) {
+    <div class="chart-container" >
+        <p-chart type="bar" [data]="chartData()!" [options]="chartOptions" height="350px">
+        </p-chart>
+    </div>
+  }
+  @else {
+    <ng-template #loading>
+        <div class="loading-state">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            <p>Carregando dados...</p>
+        </div>
+    </ng-template>
+  }
+
+  
+</p-card>

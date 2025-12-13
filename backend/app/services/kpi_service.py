@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from typing import List
 
 from app.models.fuel_record import FuelRecord
-from app.schemas.kpi import FuelPriceAverage, VehicleVolumeTotal, StateVolume, StateVolumeList
+from app.schemas.kpi import FuelPriceAverage, VehicleVolumeTotal, StateVolume, StateVolumeList, TopStationVolume, TopStationVolumeList
 
 class KPIService:
 
@@ -58,3 +58,27 @@ class KPIService:
         ]
 
         return StateVolumeList(items=items)
+    
+    @staticmethod
+    def get_top_stations_by_volume(db: Session, limit: int = 5) -> TopStationVolumeList:
+        results = (
+            db.query(
+                FuelRecord.station_identifier,
+                FuelRecord.station_name,
+                func.sum(FuelRecord.sold_volume).label("total_volume"),
+            )
+            .group_by(FuelRecord.station_identifier, FuelRecord.station_name)
+            .order_by(desc("total_volume"))
+            .limit(limit)
+            .all()
+        )
+
+        items = [
+            TopStationVolume(
+                station_identifier=row.station_identifier,
+                station_name=row.station_name,
+                total_volume=float(row.total_volume),
+            )
+            for row in results
+        ]
+        return TopStationVolumeList(items=items)

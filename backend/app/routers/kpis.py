@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.kpi import FuelPriceAverageList, VehicleVolumeTotalList, StateVolumeList
+from app.schemas.kpi import FuelPriceAverageList, VehicleVolumeTotalList, StateVolumeList, TopStationVolumeList
 from app.services.kpi_service import KPIService
 
 router = APIRouter()
@@ -20,3 +20,7 @@ def vehicle_volume_totals(db: Session = Depends(get_db)):
 @router.get("/state-volumes", response_model=StateVolumeList, summary="Total volume consumed per state")
 def state_volumes(db: Session = Depends(get_db)):
     return KPIService.get_state_volumes(db)
+
+@router.get("/top-stations-by-volume", response_model=TopStationVolumeList, summary="Top 5 stations by total volume")
+def top_stations_by_volume(db: Session = Depends(get_db)):
+    return KPIService.get_top_stations_by_volume(db)
