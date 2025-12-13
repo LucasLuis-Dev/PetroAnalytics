@@ -35,13 +35,13 @@ export class DashboardStats {
       }
     },
     {
-      title: 'Média Preço/Litro',
-      value: `R$ ${this.facade.avgPricePerLiter().toFixed(2).replace('.', ',')}`,
+      title: 'Valor Total Gasto',
+      value: `R$ ${this.facade.totalSpent().toFixed(2).replace('.', ',')}`,
       icon: this.faDollarSign,
       iconColor: '#0284c7',
       change: {
         value: '3.2%',
-        label: this.facade.avgPriceFuelType() || 'média geral',
+        label: this.facade.totalSpent() || 'média geral',
         type: 'negative' as const
       }
     },

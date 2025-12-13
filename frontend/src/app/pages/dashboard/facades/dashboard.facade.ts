@@ -37,12 +37,13 @@ export class DashboardFacade {
     return total / prices.length;
   });
 
-  avgPriceFuelType = computed(() => {
-    const prices = this.fuelPriceAverages();
-    if (prices.length === 0) return '';
+  totalSpent = computed(() => {
+    const records = this.fuelRecords();
+    if (records.length === 0) return 0;
     
-    const gasoline = prices.find(p => p.fuel_type === 'Gasoline');
-    return gasoline ? 'Gasolina' : '';
+    return records.reduce((total, record) => {
+      return total + (record.sale_price * record.sold_volume);
+    }, 0);
   });
 
   totalConsumption = computed(() => {
