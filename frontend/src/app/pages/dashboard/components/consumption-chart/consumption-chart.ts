@@ -29,15 +29,15 @@ export class ConsumptionChart implements OnInit {
     if (data.length === 0) return null;
 
     const colorMap: Record<string, string> = {
-      'Car': '#0f766e',
-      'Motorcycle': '#f59e0b',
-      'Truck': '#0e7490',
-      'Bus': '#10b981',
-      'Light Truck': '#94a3b8'
+      'Carro': '#0f766e',
+      'Moto': '#f59e0b',
+      'Carreta': '#0e7490',
+      'Ônibus': '#10b981',
+      'Caminhão Leve': '#94a3b8'
     };
 
     return {
-      labels: data.map(item => this.translateVehicleType(item.vehicle_type)),
+      labels: data.map(item => item.vehicle_type),
       datasets: [{
         data: data.map(item => item.total_volume),
         backgroundColor: data.map(item => colorMap[item.vehicle_type] || '#94a3b8'),
@@ -52,15 +52,15 @@ export class ConsumptionChart implements OnInit {
 
     const total = data.reduce((sum, item) => sum + item.total_volume, 0);
     const colorMap: Record<string, string> = {
-      'Car': '#0f766e',
-      'Motorcycle': '#f59e0b',
-      'Truck': '#0e7490',
-      'Bus': '#10b981',
-      'Light Truck': '#94a3b8'
+      'Carro': '#0f766e',
+      'Moto': '#f59e0b',
+      'Carreta': '#0e7490',
+      'Ônibus': '#10b981',
+      'Caminhão Leve': '#94a3b8'
     };
 
     return data.map(item => ({
-      label: this.translateVehicleType(item.vehicle_type),
+      label: item.vehicle_type,
       color: colorMap[item.vehicle_type] || '#94a3b8',
       percentage: ((item.total_volume / total) * 100).toFixed(1) + '%'
     }));
@@ -91,16 +91,5 @@ export class ConsumptionChart implements OnInit {
       },
       cutout: '70%'
     };
-  }
-
-  translateVehicleType(type: string): string {
-    const translations: Record<string, string> = {
-      'Car': 'Carros',
-      'Motorcycle': 'Motos',
-      'Truck': 'Caminhões',
-      'Bus': 'Ônibus',
-      'Light Truck': 'Vans'
-    };
-    return translations[type] || type;
   }
 }

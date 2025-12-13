@@ -4,10 +4,15 @@ import { HttpService } from '../../../core/services/http.service';
 import { VehicleVolumeResponse } from '../../../shared/models/vehicle-volume-totals.model';
 import { FuelPriceAverageResponse } from '../../../shared/models/fuel-price-averages.model';
 import { FuelRecordsResponse, FuelRecord } from '../../../shared/models/fuel-records.model';
+import { FilterOptionsResponse } from '../../../shared/models/filter-options.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardApi {
   private http = inject(HttpService);
+
+  getFilterOptions(): Observable<FilterOptionsResponse> {
+    return this.http.get<FilterOptionsResponse>('/fuel-records/filter-options');
+  }
 
   getVehicleVolumeTotals(): Observable<VehicleVolumeResponse> {
     return this.http.get<VehicleVolumeResponse>('/kpis/vehicle-volume-totals');

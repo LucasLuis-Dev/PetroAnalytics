@@ -5,7 +5,9 @@ from typing import Optional
 from app.database import get_db
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordResponse, FuelRecordList
 from app.schemas.driver_history import DriverHistoryFilter
+from app.schemas.filter_options import FilterOptions
 from app.services.fuel_record_service import FuelRecordService
+
 
 router = APIRouter()
 
@@ -48,3 +50,7 @@ def get_driver_history(
         name=filters.name,
     )
     return records
+
+@router.get('/filter-options', response_model=FilterOptions, summary="Get available filter options")
+def get_filter_options(db: Session = Depends(get_db)):
+    return FuelRecordService.get_filter_options(db)

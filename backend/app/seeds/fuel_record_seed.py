@@ -9,8 +9,8 @@ from app.models.fuel_record import FuelRecord
 
 fake = Faker("pt_BR")
 
-FUEL_TYPES = ["Gasoline", "Ethanol", "Diesel S10"]
-VEHICLE_TYPES = ["Car", "Motorcycle", "Light Truck", "Truck", "Bus"]
+FUEL_TYPES = ["Gasolina", "Etanol", "Diesel S10"]
+VEHICLE_TYPES = ["Carro", "Moto", "Caminhão Leve", "Carreta", "Ônibus"]
 CITIES = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Recife", "Brasília"]
 
 def generate_record() -> FuelRecord:

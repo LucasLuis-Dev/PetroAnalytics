@@ -1,10 +1,11 @@
 from typing import Optional
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import distinct
 from typing import List
 
 from app.models.fuel_record import FuelRecord
-from app.schemas.fuel_record import FuelRecordCreate, FuelRecordList, FuelRecordResponse
+from app.schemas.fuel_record import FuelRecordCreate, FuelRecordList
+from app.schemas.filter_options import FilterOptions
 
 
 class FuelRecordService:
@@ -68,5 +69,32 @@ class FuelRecordService:
         return (
             query.order_by(FuelRecord.collection_datetime.desc())
             .all()
+        )
+    
+    @staticmethod
+    def get_filter_options(db: Session) -> FilterOptions:
+            
+        fuel_types = (
+            db.query(distinct(FuelRecord.fuel_type))
+            .order_by(FuelRecord.fuel_type)
+            .all()
+        )
+        
+        vehicle_types = (
+            db.query(distinct(FuelRecord.vehicle_type))
+            .order_by(FuelRecord.vehicle_type)
+            .all()
+        )
+        
+        cities = (
+            db.query(distinct(FuelRecord.city))
+            .order_by(FuelRecord.city)
+            .all()
+        )
+        
+        return FilterOptions(
+            fuel_types=[row[0] for row in fuel_types],
+            vehicle_types=[row[0] for row in vehicle_types],
+            cities=[row[0] for row in cities],
         )
     

@@ -9,16 +9,74 @@
         </div>
     </div>
     
-    <div class="filters-box">
-        <p-select [options]=[]  optionLabel="name" placeholder="Todos os Combustíveis" size="large" class="filter-select" />
-        <p-select [options]=[]  optionLabel="name" placeholder="Todas as Cidades" size="large" class="filter-select" />
-        <p-select [options]=[]  optionLabel="name" placeholder="Todos os Veículos" size="large" class="filter-select" />
-        <p-iconfield>
-            <p-inputicon class="pi pi-search"  />
-            <input class="filter-select" type="text" pInputText placeholder="Buscar por nome ou CPF" pSize="large" />
-        </p-iconfield>
-        <button class="submit-button">
+    <form [formGroup]="filterForm" class="filters-box" (ngSubmit)="applyFilters()">
+        <!-- Select de Combustíveis -->
+        <p-select 
+            [options]="facade.fuelTypeOptions()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Todos os Combustíveis"
+            formControlName="fuelType"
+            [showClear]="true"
+            class="filter-select">
+        </p-select>
+        
+        <!-- Select de Cidades -->
+        <p-select 
+            [options]="facade.cityOptions()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Todas as Cidades"
+            formControlName="city"
+            [showClear]="true"
+            class="filter-select">
+        </p-select>
+        
+        <!-- Select de Veículos -->
+        <p-select 
+            [options]="facade.vehicleTypeOptions()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Todos os Veículos"
+            formControlName="vehicleType"
+            [showClear]="true"
+            class="filter-select">
+        </p-select>
+        
+        <div class="search-field-wrapper">
+            <p-iconfield style="display: flex; height: 100%;">
+                <p-inputicon class="pi pi-search" />
+                <input 
+                    class="filter-select" 
+                    type="text" 
+                    pInputText 
+                    placeholder="Buscar por nome ou CPF"
+                    formControlName="searchTerm"
+                    [class.p-invalid]="showCpfError"
+                    [mask]="isCpfMode ? '000.000.000-00' : ''"
+                    [dropSpecialCharacters]="false"
+                    [showMaskTyped]="false"
+                    pSize="large" />
+            </p-iconfield>
+            
+            @if (showCpfError) {
+                <small class="error-message">
+                    <i class="pi pi-exclamation-circle"></i>
+                    CPF inválido. Digite um CPF válido ou busque por nome.
+                </small>
+            }
+        </div>
+        
+        <button 
+            type="submit"
+            class="submit-button"
+            (click)="applyFilters()"
+            [disabled]="filterForm.invalid">
             Aplicar
         </button>
-    </div>
+
+        <button class="clear-filter-button" (click)="clearFilters()">
+            <fa-icon [icon]="faClose"></fa-icon>
+        </button>
+    </form>
 </div>

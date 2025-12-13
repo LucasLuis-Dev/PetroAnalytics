@@ -27,12 +27,12 @@ export class FuelPriceAverageChart implements OnInit {
     if (data.length === 0) return null;
 
     const colorMap: Record<string, string> = {
-      'Gasoline': '#0f766e',
-      'Ethanol': '#f59e0b',
+      'Gasolina': '#0f766e',
+      'Etanol': '#f59e0b',
       'Diesel S10': '#10b981'
     };
 
-    const labels = data.map(item => this.translateFuelType(item.fuel_type));
+    const labels = data.map(item => item.fuel_type);
     const values = data.map(item => item.average_price);
     const colors = data.map(item => colorMap[item.fuel_type] || '#94a3b8');
 
@@ -95,14 +95,5 @@ export class FuelPriceAverageChart implements OnInit {
         }
       }
     };
-  }
-
-  translateFuelType(type: string): string {
-    const translations: Record<string, string> = {
-      'Gasoline': 'Gasolina',
-      'Ethanol': 'Etanol',
-      'Diesel S10': 'Diesel'
-    };
-    return translations[type] || type;
   }
 }

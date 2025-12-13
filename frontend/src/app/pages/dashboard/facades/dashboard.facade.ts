@@ -3,10 +3,15 @@ import { DashboardApi } from '../services/dashboard.api';
 import { VehicleVolumeItem } from '../../../shared/models/vehicle-volume-totals.model';
 import { FuelPriceAverageItem } from '../../../shared/models/fuel-price-averages.model';
 import { FuelRecord } from '../../../shared/models/fuel-records.model';
+import { FilterOption } from '../../../shared/models/dashboard-filter.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardFacade {
   private api = inject(DashboardApi);
+
+  fuelTypeOptions = signal<FilterOption[]>([]);
+  cityOptions = signal<FilterOption[]>([]);
+  vehicleTypeOptions = signal<FilterOption[]>([]);
 
   vehicleVolume = signal<VehicleVolumeItem[]>([]);
   fuelPriceAverages = signal<FuelPriceAverageItem[]>([]);
@@ -17,6 +22,7 @@ export class DashboardFacade {
 
   loadingKpis = signal(false);
   loadingRecords = signal(false);
+  loadingFilterOptions = signal(false);
 
   totalRefuels = computed(() => {
     const volumes = this.vehicleVolume();
@@ -45,6 +51,40 @@ export class DashboardFacade {
   });
 
   activeDrivers = signal(0);
+
+  loadFilterOptions() {
+    this.loadingFilterOptions.set(true);
+    
+    this.api.getFilterOptions().subscribe({
+      next: res => {
+        this.fuelTypeOptions.set(
+          res.fuel_types.map(ft => ({ 
+            label: ft, 
+            value: ft 
+          }))
+        );
+
+        this.cityOptions.set(
+          res.cities.map(city => ({ 
+            label: city, 
+            value: city 
+          }))
+        );
+
+        this.vehicleTypeOptions.set(
+          res.vehicle_types.map(vt => ({ 
+            label: vt, 
+            value: vt 
+          }))
+        );
+
+        this.loadingFilterOptions.set(false);
+      },
+      error: () => {
+        this.loadingFilterOptions.set(false);
+      }
+    });
+  }
 
   loadKpis() {
     this.loadingKpis.set(true);

@@ -31,9 +31,9 @@ export class FuelRecordTable {
 
   getFuelTypeSeverity(fuelType: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' {
     const severityMap: Record<string, 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast'> = {
-      'Gasoline': 'info',
-      'Diesel': 'success',
-      'Ethanol': 'warn'
+      'Gasolina': 'info',
+      'Diesel S10': 'success',
+      'Etanol': 'warn'
     };
     return severityMap[fuelType] || 'info';
   }
