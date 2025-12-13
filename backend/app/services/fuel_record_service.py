@@ -2,6 +2,7 @@ from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import distinct, func
 from typing import List
+from app.utils.query_filters import apply_fuel_record_filters
 
 from app.models.fuel_record import FuelRecord
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordList
@@ -24,17 +25,12 @@ class FuelRecordService:
         page: int = 1,
         page_size: int = 10,
         fuel_type: Optional[str] = None,
+        state: Optional[str] = None,
         city: Optional[str] = None,
         vehicle_type: Optional[str] = None,
     ) -> FuelRecordList:
         query = db.query(FuelRecord)
-
-        if fuel_type:
-            query = query.filter(FuelRecord.fuel_type == fuel_type)
-        if city:
-            query = query.filter(FuelRecord.city == city)
-        if vehicle_type:
-            query = query.filter(FuelRecord.vehicle_type == vehicle_type)
+        query = apply_fuel_record_filters(query, fuel_type, city, state, vehicle_type)
 
         total = query.count()
         records = (
@@ -115,41 +111,32 @@ class FuelRecordService:
         city: Optional[str] = None,
         vehicle_type: Optional[str] = None,
     ) -> FuelSummary:
-        query = db.query(FuelRecord)
+        base_query = db.query(FuelRecord)
+        base_query = apply_fuel_record_filters(base_query, fuel_type=fuel_type, city=city, state=state, vehicle_type=vehicle_type)
 
-        if fuel_type:
-            query = query.filter(FuelRecord.fuel_type == fuel_type)
-        if state:
-            query = query.filter(FuelRecord.state == state)
-        if city:
-            query = query.filter(FuelRecord.city == city)
-        if vehicle_type:
-            query = query.filter(FuelRecord.vehicle_type == vehicle_type)
+        subq = base_query.subquery()
 
         total_volume = (
-            db.query(func.coalesce(func.sum(FuelRecord.sold_volume), 0.0))
-            .select_from(query.subquery())
+            db.query(func.coalesce(func.sum(subq.c.sold_volume), 0.0))
             .scalar()
         )
 
         total_amount = (
             db.query(
                 func.coalesce(
-                    func.sum(FuelRecord.sold_volume * FuelRecord.sale_price),
+                    func.sum(subq.c.sold_volume * subq.c.sale_price),
                     0.0,
                 )
             )
-            .select_from(query.subquery())
             .scalar()
         )
 
         active_drivers = (
-            db.query(func.count(distinct(FuelRecord.driver_cpf)))
-            .select_from(query.subquery())
+            db.query(func.count(distinct(subq.c.driver_cpf)))
             .scalar()
         )
 
-        total_fillings = query.count()
+        total_fillings = db.query(func.count(subq.c.id)).scalar()
 
         return FuelSummary(
             total_volume=float(total_volume),

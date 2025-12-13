@@ -27,6 +27,7 @@ def list_fuel_records(
     page: int = 1,
     page_size: int = 10,
     fuel_type: Optional[str] = None,
+    state: Optional[str] = None,
     city: Optional[str] = None,
     vehicle_type: Optional[str] = None,
     db: Session = Depends(get_db),
@@ -36,6 +37,7 @@ def list_fuel_records(
         page=page,
         page_size=page_size,
         fuel_type=fuel_type,
+        state=state,
         city=city,
         vehicle_type=vehicle_type,
     )

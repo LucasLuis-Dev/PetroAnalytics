@@ -6,6 +6,7 @@ import { FuelRecord } from '../../../shared/models/fuel-records.model';
 import { DashboardFilters, FilterOption } from '../../../shared/models/dashboard-filter.model';
 import { VolumeByStateItem } from '../../../shared/models/volume-by-state.model';
 import { TopStationItem } from '../../../shared/models/top-station.model';
+import { forkJoin } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardFacade {
@@ -103,35 +104,26 @@ export class DashboardFacade {
 
   loadKpis() {
     this.loadingKpis.set(true);
-
-    this.api.getVehicleVolumeTotals().subscribe({
-      next: res => this.vehicleVolume.set(res.items),
-      error: () => this.loadingKpis.set(false),
-      complete: () => this.loadingKpis.set(false),
-    });
-
-    this.api.getFuelPriceAverages().subscribe({
-      next: res => this.fuelPriceAverages.set(res.items),
-      error: () => this.loadingKpis.set(false),
-      complete: () => this.loadingKpis.set(false),
-    });
-
-    this.api.getVolumeByState().subscribe({
-      next: res => {
-        this.volumeByState.set(res.items);
+    const filters = this.filtersDashboard();
+    
+    forkJoin({
+      vehicleVolume: this.api.getVehicleVolumeTotals(filters),
+      fuelPriceAverages: this.api.getFuelPriceAverages(filters),
+      volumeByState: this.api.getVolumeByState(filters),
+      topStations: this.api.getTopStationsByVolume(filters)
+    }).subscribe({
+      next: (results: any) => {
+        this.vehicleVolume.set(results.vehicleVolume.items);
+        this.fuelPriceAverages.set(results.fuelPriceAverages.items);
+        this.volumeByState.set(results.volumeByState.items);
+        this.topStations.set(results.topStations.items);
+      },
+      error: (err: any) => {
         this.loadingKpis.set(false);
       },
-      error: () => this.loadingKpis.set(false),
-      complete: () => this.loadingKpis.set(false),
-    });
-
-    this.api.getTopStationsByVolume().subscribe({
-      next: res => {
-        this.topStations.set(res.items);
-        this.loadingKpis.set(false);
-      }, 
-      error: () => this.loadingKpis.set(false),
-      complete: () => this.loadingKpis.set(false),
+      complete: () => {
+        this.loadingKpis.set(false); 
+      }
     });
   }
 
@@ -185,12 +177,14 @@ export class DashboardFacade {
     this.filtersDashboard.set(activeFilters);
 
     this.loadSummary();
+    this.loadKpis();
     this.loadFuelRecords(1);
   }
 
   clearFilters() {
     this.filtersDashboard.set({});
     this.loadSummary();
+    this.loadKpis();
     this.loadFuelRecords(1);
   }
 

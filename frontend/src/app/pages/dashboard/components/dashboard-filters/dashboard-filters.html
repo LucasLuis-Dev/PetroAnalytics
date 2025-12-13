@@ -9,7 +9,7 @@
         </div>
     </div>
     
-    <form [formGroup]="filterForm" class="filters-box" (ngSubmit)="applyFilters()">
+    <form [formGroup]="filterForm" class="filters-box">
 
         <p-select 
             [options]="facade.fuelTypeOptions()"

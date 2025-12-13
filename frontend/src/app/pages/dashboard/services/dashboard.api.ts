@@ -8,6 +8,7 @@ import { FilterOptionsResponse } from '../../../shared/models/filter-options.mod
 import { FuelSummary } from '../../../shared/models/fuel-summary.model';
 import { VolumeByStateResponse } from '../../../shared/models/volume-by-state.model';
 import { TopStationsResponse } from '../../../shared/models/top-station.model';
+import { DashboardFilters } from '../../../shared/models/dashboard-filter.model'; 
 
 @Injectable({ providedIn: 'root' })
 export class DashboardApi {
@@ -17,12 +18,12 @@ export class DashboardApi {
     return this.http.get<FilterOptionsResponse>('/fuel-records/filter-options');
   }
 
-  getVehicleVolumeTotals(): Observable<VehicleVolumeResponse> {
-    return this.http.get<VehicleVolumeResponse>('/kpis/vehicle-volume-totals');
+  getVehicleVolumeTotals(params?: DashboardFilters): Observable<VehicleVolumeResponse> {
+    return this.http.get<VehicleVolumeResponse>('/kpis/vehicle-volume-totals', params);
   }
 
-  getFuelPriceAverages(): Observable<FuelPriceAverageResponse> {
-    return this.http.get<FuelPriceAverageResponse>('/kpis/fuel-price-averages');
+  getFuelPriceAverages(params?: DashboardFilters): Observable<FuelPriceAverageResponse> {
+    return this.http.get<FuelPriceAverageResponse>('/kpis/fuel-price-averages', params);
   }
 
   getFuelRecords(params: {
@@ -35,12 +36,7 @@ export class DashboardApi {
     return this.http.get<FuelRecordsResponse>('/fuel-records/', params);
   }
 
-  getFuelSummary(params?: {
-    fuel_type?: string;
-    city?: string;
-    state?: string;
-    vehicle_type?: string;
-  }): Observable<FuelSummary> {
+  getFuelSummary(params?: DashboardFilters): Observable<FuelSummary> {
     return this.http.get<FuelSummary>('/fuel-records/summary', params);
   }
 
@@ -51,11 +47,11 @@ export class DashboardApi {
     return this.http.get<FuelRecord[]>('/fuel-records/drivers-history', params);
   }
 
-  getVolumeByState(): Observable<VolumeByStateResponse> {
-    return this.http.get<VolumeByStateResponse>('/kpis/state-volumes');
+  getVolumeByState(params?: DashboardFilters): Observable<VolumeByStateResponse> {
+    return this.http.get<VolumeByStateResponse>('/kpis/state-volumes', params);
   }
 
-  getTopStationsByVolume(): Observable<TopStationsResponse> {
-    return this.http.get<TopStationsResponse>('/kpis/top-stations-by-volume');
+  getTopStationsByVolume(params?: DashboardFilters): Observable<TopStationsResponse> {
+    return this.http.get<TopStationsResponse>('/kpis/top-stations-by-volume', params);
   }
 }
