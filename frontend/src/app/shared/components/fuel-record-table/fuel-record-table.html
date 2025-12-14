@@ -1,13 +1,10 @@
 <p-card class="records-table-card-box">
-  <div class="table-header">
-    <div class="header-icon">
-      <fa-icon [icon]="icon()"></fa-icon>
-    </div>
-    <div class="header-text">
-      <h3>{{ title() }}</h3>
-      <p class="subtitle">{{ subtitleText() }}</p>
-    </div>
-  </div>
+  <app-card-header
+    [icon]="icon()"
+    [title]="title()"
+    [subtitle]="subtitleText()">
+  </app-card-header>
+  
 
   <p-table
     [value]="data()"

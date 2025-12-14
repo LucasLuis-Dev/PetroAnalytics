@@ -1,26 +1,25 @@
 <p-card class="chart-card-box">
-  <div class="chart-header">
-    <div class="header-icon">
-      <fa-icon [icon]="faChartColumn"></fa-icon>
-    </div>
-    <div class="header-text">
-      <h3>Preço Médio por Combustível</h3>
-      <p class="subtitle">Média do preço por litro no período</p>
-    </div>
-  </div>
+  <app-card-header
+    [icon]="faChartColumn"
+    [title]="'Preço Médio por Combustível'"
+    [subtitle]="'Média do preço por litro no período'">
+  </app-card-header>
   
-  <div class="chart-container" *ngIf="chartData(); else loading">
-    <p-chart 
-      type="bar" 
-      [data]="chartData()!" 
-      [options]="chartOptions"
-      height="400px">
-    </p-chart>
-  </div>
-
-  <ng-template #loading>
-    <div class="loading-state">
-      <p>Carregando dados...</p>
+  @if (chartData()) {
+    <div class="chart-container">
+      <p-chart 
+        type="bar" 
+        [data]="chartData()!" 
+        [options]="chartOptions"
+        height="400px">
+      </p-chart>
     </div>
-  </ng-template>
+  }
+  @else {
+    <ng-template #loading>
+      <div class="loading-state">
+        <p>Carregando dados...</p>
+      </div>
+    </ng-template>
+  }
 </p-card>

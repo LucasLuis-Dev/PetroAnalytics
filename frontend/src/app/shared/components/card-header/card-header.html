@@ -1,0 +1,11 @@
+<div class="card-header">
+  <div class="header-icon" [style.background]="iconColor()">
+    <fa-icon [icon]="icon()"></fa-icon>
+  </div>
+  <div class="header-text">
+    <h3>{{ title() }}</h3>
+    @if (subtitle()) {
+      <p class="subtitle">{{ subtitle() }}</p>
+    }
+  </div>
+</div>

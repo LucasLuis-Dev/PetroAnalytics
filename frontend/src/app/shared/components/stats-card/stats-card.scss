@@ -1,3 +1,5 @@
+@use "../../../../scss/abstracts/variables" as *;
+
 .stats-card-box {
     height: 100%;
     padding: .75rem;
@@ -12,6 +14,7 @@
             & .stats-title {
                 font-size: 1.4rem;
                 font-weight: 500;
+                color: $text-color-secondary;
                 margin: 0 0 0.5rem 0;
             }
 

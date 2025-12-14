@@ -5,6 +5,7 @@ import { ChartModule } from 'primeng/chart';
 import { faGasPump } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardFacade } from '../../facades/dashboard.facade';
+import { CardHeader } from '../../../../shared/components/card-header/card-header';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { DashboardFacade } from '../../facades/dashboard.facade';
     CardModule,
     ChartModule,
     FontAwesomeModule,
+    CardHeader
   ],
   templateUrl: './top-stations-chart.html',
   styleUrl: './top-stations-chart.scss',

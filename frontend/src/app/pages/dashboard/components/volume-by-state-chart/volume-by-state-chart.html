@@ -1,13 +1,9 @@
 <p-card class="chart-card-box">
-  <div class="chart-header">
-    <div class="header-icon">
-      <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-    </div>
-    <div class="header-text">
-      <h3>Volume por Estado</h3>
-      <p class="subtitle">Total de litros consumidos por estado</p>
-    </div>
-  </div>
+  <app-card-header
+    [icon]="faMapMarkerAlt"
+    [title]="'Volume por Estado'"
+    [subtitle]="'Total de litros consumidos por estado'">
+  </app-card-header>
   
   @if (chartData()) {
     <div class="chart-container">

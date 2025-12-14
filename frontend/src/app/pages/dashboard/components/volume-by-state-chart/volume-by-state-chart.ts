@@ -5,6 +5,7 @@ import { ChartModule } from 'primeng/chart';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardFacade } from '../../facades/dashboard.facade';
+import { CardHeader } from '../../../../shared/components/card-header/card-header';
 
 @Component({
   selector: 'app-volume-by-state-chart',
@@ -13,6 +14,7 @@ import { DashboardFacade } from '../../facades/dashboard.facade';
     CardModule,
     ChartModule,
     FontAwesomeModule,
+    CardHeader
   ],
   templateUrl: './volume-by-state-chart.html',
   styleUrl: './volume-by-state-chart.scss',

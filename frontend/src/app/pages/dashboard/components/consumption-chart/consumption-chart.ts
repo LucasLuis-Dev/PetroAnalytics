@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPieChart } from '@fortawesome/free-solid-svg-icons';
 import { ChartLegend } from '../../../../shared/components/chart-legend/chart-legend';
 import { DashboardFacade } from '../../facades/dashboard.facade';
+import { CardHeader } from '../../../../shared/components/card-header/card-header';
 
 @Component({
   selector: 'app-consumption-chart',
@@ -14,7 +15,8 @@ import { DashboardFacade } from '../../facades/dashboard.facade';
     CardModule, 
     ChartModule, 
     ChartLegend,
-    FontAwesomeModule
+    FontAwesomeModule,
+    CardHeader
   ],
   templateUrl: './consumption-chart.html',
   styleUrl: './consumption-chart.scss',

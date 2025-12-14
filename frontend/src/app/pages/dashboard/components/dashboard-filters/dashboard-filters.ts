@@ -8,6 +8,7 @@ import { faFilter, faClose } from '@fortawesome/free-solid-svg-icons';
 import { DashboardFacade } from '../../facades/dashboard.facade';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CardHeader } from '../../../../shared/components/card-header/card-header';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     InputTextModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    CardHeader
   ],
   templateUrl: './dashboard-filters.html',
   styleUrl: './dashboard-filters.scss',

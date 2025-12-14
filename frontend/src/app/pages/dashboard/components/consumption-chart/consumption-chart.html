@@ -1,13 +1,9 @@
 <p-card class="chart-card-box">
-    <div class="chart-header">
-        <div class="header-icon">
-            <fa-icon [icon]="faPieChart"></fa-icon>
-        </div>
-        <div class="header-text">
-            <h3>Consumo por Tipo de Veículo</h3>
-            <p class="subtitle">Distribuição percentual</p>
-        </div>
-    </div>
+    <app-card-header
+    [icon]="faPieChart"
+    [title]="'Consumo por Tipo de Veículo'"
+    [subtitle]="'Distribuição percentual'">
+    </app-card-header>
     
     <div class="chart-container">
         <p-chart 

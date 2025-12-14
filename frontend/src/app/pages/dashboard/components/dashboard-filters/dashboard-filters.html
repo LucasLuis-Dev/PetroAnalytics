@@ -1,13 +1,9 @@
 <div id="container">
-    <div class="head-box">
-        <div class="header-icon">
-            <fa-icon [icon]="faFilter"></fa-icon>
-        </div>
-        <div class="header-text">
-            <h3>Filtros</h3>
-            <p class="subtitle">Refine sua busca por abastecimentos</p>
-        </div>
-    </div>
+    <app-card-header
+    [icon]="faFilter"
+    [title]="'Filtros'"
+    [subtitle]="'Refine sua busca por abastecimentos'">
+    </app-card-header>
     
     <form [formGroup]="filterForm" class="filters-box">
 

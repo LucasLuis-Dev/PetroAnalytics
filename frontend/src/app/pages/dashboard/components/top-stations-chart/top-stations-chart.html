@@ -1,13 +1,9 @@
 <p-card class="chart-card-box">
-  <div class="chart-header">
-    <div class="header-icon">
-      <fa-icon [icon]="faGasPump"></fa-icon>
-    </div>
-    <div class="header-text">
-      <h3>Top 5 Postos</h3>
-      <p class="subtitle">Postos com maior volume de combustível</p>
-    </div>
-  </div>
+  <app-card-header
+    [icon]="faGasPump"
+    [title]="'Top 5 Postos'"
+    [subtitle]="'Postos com maior volume de combustível'">
+  </app-card-header>
   
   @if (chartData()) {
     <div class="chart-container" >

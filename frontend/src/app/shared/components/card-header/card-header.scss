@@ -1,0 +1,39 @@
+@use "../../../../scss/abstracts/variables" as *;
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    & .header-icon {
+        width: 48px;
+        height: 48px;
+        background: $background-primary;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        fa-icon {
+            font-size: 1.7rem;
+            color: white;
+        }
+    }
+
+    & .header-text {
+        flex: 1;
+        
+        h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: $text-color;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            margin: 0;
+            color: $text-color-secondary;
+        }
+    }   
+}
