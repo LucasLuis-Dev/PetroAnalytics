@@ -1,10 +1,9 @@
 <div id="container">
   <div class="page-header">
     <button 
-      pButton 
-      icon="pi pi-arrow-left" 
       class="back-button"
       (click)="goBack()">
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
     </button>
     
     <div class="header-icon">
@@ -23,5 +22,16 @@
 
   @if (!facade.selectedDriver()) {
     <app-driver-list></app-driver-list>
+  }
+  @else {
+    <app-fuel-record-table
+      [data]="facade.driverRecords()"
+      [columns]="fuelRecordColumns"
+      [loading]="facade.loadingRecords()"
+      [totalRecords]="facade.driverRecordsTotal()"
+      [pageSize]="facade.driverRecordsPageSize()"
+      [title]="facade.selectedDriver()?.name ?? 'Selecione um motorista'"
+      (onPageChange)="handlePageChange($event)">
+    </app-fuel-record-table>
   }
 </div>

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, model_validator, field_validator, Field
 from typing import List, Optional
 from app.utils.validators import validate_cpf, normalize_string
 
@@ -6,10 +6,15 @@ from app.utils.validators import validate_cpf, normalize_string
 class Driver(BaseModel):
     name: str
     cpf: str
+    total_fillings: int
 
 
 class DriverList(BaseModel):
     drivers: List[Driver]
+    total: int
+    page: int
+    page_size: int
+
 
 class DriverHistoryFilter(BaseModel):
     cpf: Optional[str] = None

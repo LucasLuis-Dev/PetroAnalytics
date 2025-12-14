@@ -1,6 +1,6 @@
 export interface DriverSummary {
-  driver_name: string;
-  driver_cpf: string;
+  name: string;
+  cpf: string;
   total_fillings: number;
 }
 

@@ -1,11 +1,13 @@
-import { Component, computed, model, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { DriverRecordsHistoryFacade } from '../../facades/drivers-records-history.facade';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-driver-search',
@@ -16,26 +18,23 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     InputTextModule,
     IconFieldModule,
     InputIconModule,
-    NgxMaskDirective
+    FontAwesomeModule
   ],
-  providers: [provideNgxMask()],
   templateUrl: './driver-search.html',
   styleUrl: './driver-search.scss',
 })
 export class DriverSearch {
-  searchValue = model('');
-  onSearch = output<string>();
-  isCpfMode = false;
+  facade = inject(DriverRecordsHistoryFacade);
+  faArrowLeft = faArrowLeft
+  searchValue = '';
 
-  currentMask = computed(() => {
-    const value = this.searchValue();
-    
-    const cleanValue = value.replace(/[^\w]/g, '');
-    
-    if (/^\d/.test(cleanValue)) {
-      return '000.000.000-00';
-    }
-    
-    return '';
-  });
+  onSearchChange(value: string) {
+    this.searchValue = value;
+    this.facade.searchDrivers(value);
+  }
+
+  clearSearch() {
+    this.searchValue = '';
+    this.facade.clearSearch();
+  }
 }

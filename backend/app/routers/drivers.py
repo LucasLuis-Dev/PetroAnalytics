@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
+from typing import Optional
 from app.database import get_db
 from app.schemas.driver import DriverList, DriverHistoryFilter
 from app.services.driver_service import DriverService
@@ -13,8 +14,18 @@ router = APIRouter()
     response_model=DriverList,
     summary="List all drivers",
 )
-def list_drivers(db: Session = Depends(get_db)) -> DriverList:
-    return DriverService.get_all_drivers(db)
+def list_drivers(
+    search: Optional[str] = None,
+    page: int = 1,
+    page_size: int = 10,
+    db: Session = Depends(get_db)
+) -> DriverList:
+    return DriverService.get_all_drivers(
+        db, page=page,
+        page_size=page_size,
+        search=search
+    )
+
 
 @router.get(
     "/drivers-history", 

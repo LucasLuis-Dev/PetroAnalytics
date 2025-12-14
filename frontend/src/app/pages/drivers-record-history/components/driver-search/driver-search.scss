@@ -1,8 +1,53 @@
-::ng-deep .search-card .p-card-body {
-    padding: 1rem;
+@use "../../../../../scss/abstracts/variables" as *;
+
+.search-card {
+    display: flex;
+    justify-content: space-between;
+    height: 6.5rem;
+
+    & ::ng-deep .p-card-body{
+
+        height: 100%;
+    }
+
+    & ::ng-deep .p-card-body .p-card-content {
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+
+        & .p-iconfield {
+            width: 100%;
+        }
+    }
+
+    & .pi-search {
+        left: 1.3rem;
+    }
+    
+    & .search-input {
+        width: 31rem;
+        height: 100%;
+        font-size: 1.2rem;
+        padding-left: 3.5rem;
+        background-color: $input-background;
+        border: .1rem solid $border-color;
+    }
+
+    & .return-button {
+        background-color: $input-background;
+        border: .1rem solid $border-color;
+        border-radius: 1rem;
+        width: 15%;
+        color: $text-color-secondary;
+        transition: all 150ms;
+
+         &:hover {
+            cursor: pointer;
+            color: white;
+            background: $background-primary;
+            border: .1rem solid $border-color;
+        }
+    }
 }
 
-.search-input {
-    width: 100%;
-    font-size: 1rem;
-}
+

@@ -13,13 +13,15 @@ export class DriverRecordsHistoryApi {
     page?: number;
     page_size?: number;
   }): Observable<DriverSummaryResponse> {
-    return this.http.get<DriverSummaryResponse>('/fuel-records/drivers-summary', params);
+    return this.http.get<DriverSummaryResponse>('/drivers', params);
   }
 
   getDriverHistory(params: {
     cpf?: string;
     name?: string;
+    page?: number;
+    page_size?: number;
   }): Observable<FuelRecordsResponse> {
-    return this.http.get<FuelRecordsResponse>('/fuel-records/drivers-history', params);
+    return this.http.get<FuelRecordsResponse>('/drivers-history', params);
   }
 }

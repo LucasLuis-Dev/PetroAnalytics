@@ -1,22 +1,31 @@
 <p-card class="drivers-card">
     <div class="section-header">
-        <h2>Motoristas</h2>
-        <p>Selecione um motorista para ver o histórico</p>
+        <div>
+            <h2>Motoristas</h2>
+            <p>Selecione um motorista para ver o histórico</p>
+        </div>
+
+        @if (!facade.loadingDrivers()) {
+            <div style="text-align: end;">
+                <h2>{{facade.driversTotal()}}</h2>
+                <p>Motoristas Cadastrados</p>
+            </div>
+        }
     </div>
 
     @if (!facade.loadingDrivers()) {
         <div class="drivers-list">
-            @if (facade.filteredDrivers().length === 0) {
+            @if (facade.drivers().length === 0) {
                 <div class="empty-state">
                     <i class="pi pi-inbox" style="font-size: 3rem; color: #94a3b8;"></i>
                     <p>Nenhum motorista encontrado</p>
                 </div>
             }
-            @for (driver of facade.filteredDrivers(); track driver) {
+            @for (driver of facade.drivers(); track driver) {
                 <div class="driver-item"  (click)="facade.selectDriver(driver)">
                     <div class="driver-info">
-                        <h3>{{ driver.driver_name }}</h3>
-                        <p class="cpf">{{ driver.driver_cpf }}</p>
+                        <h3>{{ driver.name }}</h3>
+                        <p class="cpf">{{ driver.cpf }}</p>
                     </div>
                     <div class="driver-count">
                         <span class="count-badge">{{ driver.total_fillings }} abastecimentos</span>
