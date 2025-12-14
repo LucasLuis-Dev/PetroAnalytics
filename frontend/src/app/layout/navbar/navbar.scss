@@ -1,10 +1,12 @@
+@use "../../../scss/abstracts/variables" as *;
+
 #container {
     display: flex;
     justify-content: space-between;
     height: 10rem;
     align-items: center;
     padding: 0rem 10%;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgb(255, 255, 255);
 
     & .logo-box {
         display: flex;
@@ -18,6 +20,10 @@
             & span {
                 font-size: 2.5rem;
                 font-weight: 700;
+                background: $background-primary;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
         }
     }

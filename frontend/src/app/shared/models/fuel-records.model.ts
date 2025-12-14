@@ -15,6 +15,10 @@ export interface FuelRecord {
   created_at: string;
 }
 
+export interface FuelRecordWithTotal extends FuelRecord {
+  total_value: number;
+}
+
 export interface FuelRecordsResponse {
   total: number;
   page: number;

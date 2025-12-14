@@ -1,21 +1,50 @@
+@use "../../../scss/abstracts/mixins" as *;
+@use "../../../scss/abstracts/variables" as *;
+
 #container {
     display: flex;
     flex-direction: column;
     padding: 2% 10%;
-    padding-top: .5%;
     background-color: #F9FAFB;
     gap: 3rem;
 
-    & .title-box {
+    & .header-box {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
-        & .title {
-            font-size: 3rem;
+        & .title-box {
+            display: flex;
+            flex-direction: column;
+            & .title {
+                font-size: 3rem;
+                color: $text-color;
+            }
+
+            & .sub-title {
+                font-size: 1.4rem;
+            }
         }
 
-        & .sub-title {
-            font-size: 1.4rem;
+        & .button-history {
+            @include button;
+            width: 20.5rem;
+            height: 4rem;
+            color: $text-color !important;
+            font-weight: 500 !important;
+            border: .1rem solid #cbd5e179 !important;
+            text-decoration: none;
+
+            &:hover {
+                background: $background-primary !important;
+                opacity: 1 !important;
+                color: white !important;
+            }
         }
     }
+
+    
+
+    
+
 }

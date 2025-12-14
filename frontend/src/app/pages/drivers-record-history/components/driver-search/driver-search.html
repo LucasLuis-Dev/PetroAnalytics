@@ -1,0 +1,13 @@
+<p-card class="search-card">
+    <p-iconfield>
+    <p-inputicon lass="pi pi-search" />
+    <input 
+        type="text" 
+        pInputText 
+        placeholder="Buscar por nome ou CPF do motorista..."
+        [(ngModel)]="searchValue"
+        [mask]="currentMask()"
+        (input)="onSearch.emit(searchValue())"
+        class="search-input" />
+    </p-iconfield>
+</p-card>

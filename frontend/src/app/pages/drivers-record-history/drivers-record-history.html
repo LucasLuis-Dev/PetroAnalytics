@@ -1,0 +1,27 @@
+<div id="container">
+  <div class="page-header">
+    <button 
+      pButton 
+      icon="pi pi-arrow-left" 
+      class="back-button"
+      (click)="goBack()">
+    </button>
+    
+    <div class="header-icon">
+      <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+    </div>
+    
+    <div class="header-text">
+      <h1>Histórico de Abastecimentos</h1>
+      <p>Consulte o histórico de abastecimento por motorista</p>
+    </div>
+  </div>
+
+  <div class="search-section">
+    <app-driver-search></app-driver-search>
+  </div>
+
+  @if (!facade.selectedDriver()) {
+    <app-driver-list></app-driver-list>
+  }
+</div>

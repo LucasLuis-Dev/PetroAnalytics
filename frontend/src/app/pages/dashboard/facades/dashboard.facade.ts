@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { DashboardApi } from '../services/dashboard.api';
 import { VehicleVolumeItem } from '../../../shared/models/vehicle-volume-totals.model';
 import { FuelPriceAverageItem } from '../../../shared/models/fuel-price-averages.model';
-import { FuelRecord } from '../../../shared/models/fuel-records.model';
+import { FuelRecord, FuelRecordWithTotal } from '../../../shared/models/fuel-records.model';
 import { DashboardFilters, FilterOption } from '../../../shared/models/dashboard-filter.model';
 import { VolumeByStateItem } from '../../../shared/models/volume-by-state.model';
 import { TopStationItem } from '../../../shared/models/top-station.model';
@@ -22,10 +22,18 @@ export class DashboardFacade {
   vehicleVolume = signal<VehicleVolumeItem[]>([]);
   fuelPriceAverages = signal<FuelPriceAverageItem[]>([]);
 
-  fuelRecords = signal<FuelRecord[]>([]);
+  _fuelRecords = signal<FuelRecord[]>([]);
   fuelRecordsTotal = signal(0);
   fuelRecordsPage = signal(1);
   fuelRecordsPageSize = signal(10);
+
+  fuelRecords = computed<FuelRecordWithTotal[]>(() => {
+    return this._fuelRecords().map(record => ({
+      ...record,
+      total_value: this.calculateTotalValue(record)
+    }));
+  });
+
 
   totalVolume = signal(0);
   totalAmount = signal(0);
@@ -43,6 +51,12 @@ export class DashboardFacade {
     const f = this.filtersDashboard();
     return !!(f.fuel_type || f.state || f.city || f.vehicle_type);
   });
+
+  private calculateTotalValue(record: FuelRecord): number {
+    const price = record.sale_price ?? 0;
+    const volume = record.sold_volume ?? 0;
+    return price * volume;
+  }
 
   loadSummary() {
     this.loadingSummary.set(true);
@@ -140,7 +154,7 @@ export class DashboardFacade {
       ...filters 
     }).subscribe({
       next: res => {
-        this.fuelRecords.set(res.records);
+        this._fuelRecords.set(res.records);
         this.fuelRecordsTotal.set(res.total);
       },
       error: () => this.loadingRecords.set(false),
@@ -186,9 +200,5 @@ export class DashboardFacade {
     this.loadSummary();
     this.loadKpis();
     this.loadFuelRecords(1);
-  }
-
-  loadDriverHistory(cpf?: string, name?: string) {
-    return this.api.getDriverHistory({ cpf, name });
   }
 }

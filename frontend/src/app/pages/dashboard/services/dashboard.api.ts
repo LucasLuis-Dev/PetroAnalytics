@@ -40,13 +40,6 @@ export class DashboardApi {
     return this.http.get<FuelSummary>('/fuel-records/summary', params);
   }
 
-  getDriverHistory(params: {
-    cpf?: string;
-    name?: string;
-  }) {
-    return this.http.get<FuelRecord[]>('/fuel-records/drivers-history', params);
-  }
-
   getVolumeByState(params?: DashboardFilters): Observable<VolumeByStateResponse> {
     return this.http.get<VolumeByStateResponse>('/kpis/state-volumes', params);
   }

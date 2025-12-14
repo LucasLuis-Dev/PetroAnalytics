@@ -1,0 +1,90 @@
+<p-card class="records-table-card-box">
+  <div class="table-header">
+    <div class="header-icon">
+      <fa-icon [icon]="icon()"></fa-icon>
+    </div>
+    <div class="header-text">
+      <h3>{{ title() }}</h3>
+      <p class="subtitle">{{ subtitleText() }}</p>
+    </div>
+  </div>
+
+  <p-table
+    [value]="data()"
+    [loading]="loading()"
+    [paginator]="true"
+    [rows]="pageSize()"
+    [totalRecords]="totalRecords()"
+    [lazy]="lazy()"
+    [rowsPerPageOptions]="rowsPerPageOptions()"
+    [showCurrentPageReport]="true"
+    (onPage)="handlePageChange($event)"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    class="p-datatable-sm p-datatable-striped"
+    [tableStyle]="{ 'min-width': '50rem' }">
+  
+
+    <ng-template pTemplate="header">
+      <tr>
+        @for (column of columns(); track column.field) {
+          <th [class]="'text-' + (column.align || 'left')">
+            {{ column.header }}
+          </th>
+        }
+      </tr>
+    </ng-template>
+
+ 
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        @for (column of columns(); track column.field) {
+          <td [class]="'text-' + (column.align || 'left')">
+            
+
+            @if (!column.type || column.type === 'text') {
+              <span>{{ getCellValue(row, column) }}</span>
+            }
+            
+
+            @if (column.type === 'date') {
+              <span>{{ getCellValue(row, column) | date: (column.format || 'dd/MM/yyyy') }}</span>
+            }
+            
+
+            @if (column.type === 'number') {
+              <span class="quantity-value">
+                {{ getCellValue(row, column) | number: (column.format || '1.1-1') }}
+              </span>
+            }
+            
+
+            @if (column.type === 'currency') {
+              <span class="currency-value">
+                {{ getCellValue(row, column) | currency: 'BRL' }}
+              </span>
+            }
+            
+
+            @if (column.type === 'tag') {
+              <p-tag 
+                [value]="getCellValue(row, column)"
+                [severity]="getFuelTypeSeverity(getCellValue(row, column))">
+              </p-tag>
+            }
+          </td>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columns().length" class="text-center">
+          <div class="empty-state">
+            <i class="pi pi-inbox" style="font-size: 3rem; color: #94a3b8;"></i>
+            <p>Nenhum registro encontrado</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

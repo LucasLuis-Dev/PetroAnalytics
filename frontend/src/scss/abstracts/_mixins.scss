@@ -1,0 +1,23 @@
+@mixin button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: .6rem;
+    width: 100%;
+    font-weight: 600;
+    transition: 150ms;
+    cursor: pointer;
+    width: 5rem;
+    gap: 1rem;
+
+    &.secundary-color {
+        background: white;
+        color: #87898D;
+        border: .1rem solid #cbd5e1;
+    }
+
+    &:hover {
+        opacity: .6;
+    }
+}

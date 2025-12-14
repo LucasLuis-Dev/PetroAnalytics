@@ -1,3 +1,5 @@
+@use "../../../scss/abstracts/variables" as *;
+
 #container {
     display: flex;
     justify-content: space-between;
@@ -6,5 +8,5 @@
     padding: 0rem 10%;
     color: white;
     background: #A8E7B6;
-    background: linear-gradient(315deg, #A8E7B6, #326F9B);
+    background: $background-primary;
 }

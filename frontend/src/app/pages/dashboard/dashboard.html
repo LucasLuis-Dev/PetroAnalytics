@@ -1,11 +1,27 @@
 <div id="container">
-    <!-- <div class="title-box">
-        <h1 class="title">Dashboard</h1>
-        <span class="sub-title">Acompanhe os indicadores de abastecimento e consumo de combustível</span>
-    </div> -->
+    <div class="header-box">
+        <div class="title-box">
+            <h1 class="title">Dashboard</h1>
+            <span class="sub-title">Acompanhe os indicadores de abastecimento e consumo de combustível</span>
+        </div>
+
+        <button class="button-history secundary-color" routerLink="/drivers/record-history">
+            <fa-icon [icon]="faClockRotateLeft"></fa-icon>
+            Histórico de Motoristas
+        </button>
+    </div>
+    
 
     <app-dashboard-filters></app-dashboard-filters>
     <app-dashboard-stats></app-dashboard-stats>
     <app-dashboard-charts></app-dashboard-charts>
-    <app-fuel-record-table></app-fuel-record-table>
+    <app-fuel-record-table
+      [data]="facade.fuelRecords()"
+      [columns]="fuelRecordColumns"
+      [loading]="facade.loadingRecords()"
+      [totalRecords]="facade.fuelRecordsTotal()"
+      [pageSize]="facade.fuelRecordsPageSize()"
+      title="Registros de Abastecimento"
+      (onPageChange)="handlePageChange($event)">
+    </app-fuel-record-table>
 </div>

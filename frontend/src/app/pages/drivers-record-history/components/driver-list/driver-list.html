@@ -1,0 +1,36 @@
+<p-card class="drivers-card">
+    <div class="section-header">
+        <h2>Motoristas</h2>
+        <p>Selecione um motorista para ver o histórico</p>
+    </div>
+
+    @if (!facade.loadingDrivers()) {
+        <div class="drivers-list">
+            @if (facade.filteredDrivers().length === 0) {
+                <div class="empty-state">
+                    <i class="pi pi-inbox" style="font-size: 3rem; color: #94a3b8;"></i>
+                    <p>Nenhum motorista encontrado</p>
+                </div>
+            }
+            @for (driver of facade.filteredDrivers(); track driver) {
+                <div class="driver-item"  (click)="facade.selectDriver(driver)">
+                    <div class="driver-info">
+                        <h3>{{ driver.driver_name }}</h3>
+                        <p class="cpf">{{ driver.driver_cpf }}</p>
+                    </div>
+                    <div class="driver-count">
+                        <span class="count-badge">{{ driver.total_fillings }} abastecimentos</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @else {
+        <ng-template #loadingTemplate>
+            <div class="loading-state">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            <p>Carregando motoristas...</p>
+            </div>
+        </ng-template>
+    } 
+</p-card>
