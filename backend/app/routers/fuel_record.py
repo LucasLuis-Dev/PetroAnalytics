@@ -4,7 +4,6 @@ from typing import Optional
 
 from app.database import get_db
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordResponse, FuelRecordList
-from app.schemas.driver_history import DriverHistoryFilter
 from app.schemas.filter_options import FilterOptions
 from app.schemas.fuel_summary import FuelSummary
 from app.services.fuel_record_service import FuelRecordService
@@ -13,7 +12,11 @@ from app.services.fuel_record_service import FuelRecordService
 router = APIRouter()
 
 
-@router.post("/", response_model=FuelRecordResponse, status_code=201)
+@router.post(
+    "/", 
+    response_model=FuelRecordResponse, 
+    status_code=201
+)
 def create_fuel_record(
     payload: FuelRecordCreate,
     db: Session = Depends(get_db),
@@ -22,7 +25,10 @@ def create_fuel_record(
     return record
 
 
-@router.get("/", response_model=FuelRecordList)
+@router.get(
+    "/", 
+    response_model=FuelRecordList
+)
 def list_fuel_records(
     page: int = 1,
     page_size: int = 10,
@@ -42,23 +48,21 @@ def list_fuel_records(
         vehicle_type=vehicle_type,
     )
 
-@router.get("/drivers-history", response_model=list[FuelRecordResponse], summary="Driver fueling history report")
-def get_driver_history(
-    filters: DriverHistoryFilter = Depends(),
-    db: Session = Depends(get_db)
-):
-    records = FuelRecordService.get_driver_history(
-        db=db,
-        cpf=filters.cpf,
-        name=filters.name,
-    )
-    return records
 
-@router.get("/filter-options", response_model=FilterOptions, summary="Get available filter options")
+@router.get(
+    "/filter-options", 
+    response_model=FilterOptions, 
+    summary="Get available filter options"
+)
 def get_filter_options(db: Session = Depends(get_db)):
     return FuelRecordService.get_filter_options(db)
 
-@router.get("/summary", response_model=FuelSummary, summary="Fuel summary with filters")
+
+@router.get(
+    "/summary", 
+    response_model=FuelSummary, 
+    summary="Fuel summary with filters"
+)
 def get_fuel_summary(
     fuel_type: Optional[str] = None,
     city: Optional[str] = None,
