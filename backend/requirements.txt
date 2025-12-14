@@ -11,3 +11,8 @@ httpx==0.25.1
 faker==20.1.0
 validate-docbr==1.10.0
 redis==5.0.1
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+bcrypt==4.0.1
+pydantic[email]

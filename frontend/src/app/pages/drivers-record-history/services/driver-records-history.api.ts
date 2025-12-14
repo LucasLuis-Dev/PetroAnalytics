@@ -22,6 +22,6 @@ export class DriverRecordsHistoryApi {
     page?: number;
     page_size?: number;
   }): Observable<FuelRecordsResponse> {
-    return this.http.get<FuelRecordsResponse>('/drivers-history', params);
+    return this.http.get<FuelRecordsResponse>('/drivers/history', params);
   }
 }

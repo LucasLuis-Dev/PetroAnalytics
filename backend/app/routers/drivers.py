@@ -10,7 +10,7 @@ from app.schemas.fuel_record import FuelRecordResponse, FuelRecordList
 router = APIRouter()
 
 @router.get(
-    "/drivers",
+    "/",
     response_model=DriverList,
     summary="List all drivers",
 )
@@ -28,7 +28,7 @@ def list_drivers(
 
 
 @router.get(
-    "/drivers-history", 
+    "/history", 
     response_model=FuelRecordList, 
     summary="Driver fueling history report"
 )

@@ -1,11 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.database import Base, engine
+from app.dependencies.auth import get_current_active_user
 
 from app.routers.fuel_record import router as fuel_router
 from app.routers.kpis import router as kpis_router
 from app.routers.drivers import router as drivers_router
+from app.routers.auth import router as auth_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -20,9 +21,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(fuel_router, prefix="/api/fuel-records", tags=["Fuel Records"])
-app.include_router(kpis_router, prefix="/api/kpis", tags=["KPIs"])
-app.include_router(drivers_router, prefix="/api", tags=["Drivers"])
+app.include_router(fuel_router, prefix="/api/fuel-records", tags=["Fuel Records"], dependencies=[Depends(get_current_active_user)])
+app.include_router(kpis_router, prefix="/api/kpis", tags=["KPIs"], dependencies=[Depends(get_current_active_user)])
+app.include_router(drivers_router, prefix="/api/drivers", tags=["Drivers"], dependencies=[Depends(get_current_active_user)])
+app.include_router(auth_router, prefix="/api/auth", tags=["Auth"])
 
 
 

@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     ENVIRONMENT: str
     PROJECT_NAME: str
     VERSION: str
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
     
     class Config:
         env_file = ".env"
