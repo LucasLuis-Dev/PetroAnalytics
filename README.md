@@ -92,16 +92,22 @@ cd backend
 cp .env.example .env
 ```
 
-Edite o arquivo `.env` com suas configurações:
+Edite o arquivo `.env` do backend com suas configurações:
 
 ```
 # Database
-DATABASE_URL=postgresql://postgres:postgres@db:5432/petroanalytics
+DATABASE_URL=postgresql+psycopg://petroanalytics_owner:petro123@postgres:5432/petroanalyticsdb
 
 # API Configuration
 API_HOST=0.0.0.0
 API_PORT=8000
 DEBUG=True
+ENVIRONMENT=development
+CORS_ORIGINS=http://localhost:4200,
+PROJECT_NAME=PetroAnalytics
+VERSION=1.0
+REDIS_URL=redis://redis:6379
+ENABLE_REDIS=True
 
 # JWT Configuration
 SECRET_KEY=sua-chave-secreta-aqui
@@ -114,6 +120,20 @@ SEED_PASSWORD=senha-segura-123
 ```
 
 > ⚠️ **IMPORTANTE**: As variáveis `SEED_EMAIL` e `SEED_PASSWORD` são obrigatórias para executar o script de seed, pois a API possui proteção de autenticação e somente usuários logados podem inserir dados.
+
+
+
+Edite o arquivo `.env` na raiz do projeto com suas configurações:
+
+```
+POSTGRES_USER=petroanalytics_owner
+POSTGRES_PASSWORD=petro123
+POSTGRES_DB=petroanalyticsdb
+ENVIRONMENT=development
+CORS_ORIGINS=http://localhost:4200
+REDIS_URL=redis://redis:6379
+```
+
 
 ### 3. Inicie os Containers com Docker Compose
 
@@ -390,15 +410,6 @@ npm update
 - ✅ Variáveis sensíveis em arquivo `.env`
 - ✅ CPF mascarado na exibição frontend
 
-### Configurações Recomendadas para Produção
-
-```
-# Produção
-DEBUG=False
-SECRET_KEY=chave-complexa-e-unica-gerada-aleatoriamente
-ACCESS_TOKEN_EXPIRE_MINUTES=15
-ALLOWED_ORIGINS=https://seu-dominio.com
-```
 
 ## 🐛 Troubleshooting
 
@@ -485,9 +496,6 @@ Este projeto foi desenvolvido como teste técnico para a V-Lab e está disponív
 ## 🙏 Agradecimentos
 
 - V-Lab pela oportunidade do desafio técnico
-- Comunidade FastAPI pela excelente documentação
-- Comunidade Angular pelos recursos e ferramentas
 - Todos que contribuíram com feedback e sugestões
-
 
 ---
