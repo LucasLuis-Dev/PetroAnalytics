@@ -1,3 +1,4 @@
+import logging
 from sqlalchemy.orm import Session
 from sqlalchemy import func, or_
 from typing import List, Optional
@@ -6,6 +7,7 @@ from app.models.fuel_record import FuelRecord
 from app.schemas.driver import Driver, DriverList
 from app.schemas.fuel_record import FuelRecordList
 
+logger = logging.getLogger("petroanalytics.driver")
 
 class DriverService:
     @staticmethod
@@ -15,6 +17,9 @@ class DriverService:
         page_size: int = 10,
         search: Optional[str] = None,
     ) -> DriverList:
+        logger.debug(
+            f"Listing drivers page={page} size={page_size} search={search!r}"
+        )
         query = (
             db.query(
                 FuelRecord.driver_cpf.label("driver_cpf"),
@@ -26,6 +31,7 @@ class DriverService:
         
         if search:
             search_filters = DriverService._build_search_filters(search)
+            logger.debug(f"Driver search filters count={len(search_filters)}")
             query = query.filter(or_(*search_filters))
         
         total = query.count()
@@ -46,7 +52,7 @@ class DriverService:
             )
             for row in rows
         ]
-        
+        logger.info(f"Listed {len(drivers)} drivers (total={total})")
         return DriverList(
             drivers=drivers,
             total=total,
@@ -57,6 +63,7 @@ class DriverService:
 
     @staticmethod
     def _build_search_filters(search: str) -> list:
+        logger.debug(f"Building driver search filters for term={search!r}")
         filters = []
         
         search_term = search.strip()
@@ -83,6 +90,9 @@ class DriverService:
         cpf: Optional[str] = None,
         name: Optional[str] = None,
     ) -> List[FuelRecord]:
+        logger.debug(
+            f"Fetching driver history page={page} size={page_size} cpf={cpf} name={name}"
+        )
         query = db.query(FuelRecord)
 
         if cpf:
@@ -100,7 +110,9 @@ class DriverService:
             .limit(page_size)
             .all()
         )
-
+        logger.info(
+            f"Driver history fetched records={len(records)} total={total} cpf={cpf} name={name}"
+        )
         return FuelRecordList(
             total=total,
             page=page,
