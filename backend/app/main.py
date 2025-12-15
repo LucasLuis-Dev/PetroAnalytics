@@ -5,6 +5,7 @@ from app.config import settings
 from app.core.logging_config import setup_logging
 from app.core.middleware import request_logger_middleware
 from app.dependencies.auth import get_current_active_user
+from app.exception_handlers import add_exception_handlers
 
 from app.routers.fuel_record import router as fuel_router
 from app.routers.kpis import router as kpis_router
@@ -19,6 +20,7 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
 )
+add_exception_handlers(app)
 
 app.add_middleware(
     CORSMiddleware,
