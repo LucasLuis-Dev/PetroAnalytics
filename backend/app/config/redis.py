@@ -1,7 +1,7 @@
 import os
 import logging
 from redis import Redis
-from config import settings
+from app.config.config import settings
 from typing import Optional
 
 logger = logging.getLogger("petroanalytics.redis")
