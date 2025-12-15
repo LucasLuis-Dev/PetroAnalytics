@@ -27,7 +27,7 @@ services:
     container_name: PetroAnalytics_backend
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: ${REDIS_URL}
       CORS_ORIGINS: ${CORS_ORIGINS}
       ENVIRONMENT: ${ENVIRONMENT}
     ports:
