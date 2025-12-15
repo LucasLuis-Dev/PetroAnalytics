@@ -27,6 +27,7 @@ services:
     container_name: PetroAnalytics_backend
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://redis:6379
       CORS_ORIGINS: ${CORS_ORIGINS}
       ENVIRONMENT: ${ENVIRONMENT}
     ports:
@@ -34,11 +35,29 @@ services:
     volumes:
       - ./backend:/app
     depends_on:
+      redis:
+          condition: service_healthy
       postgres:
-        condition: service_healthy
+          condition: service_healthy
     networks:
       - PetroAnalytics_network
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  redis:
+    image: redis:7-alpine
+    container_name: PetroAnalytics_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - PetroAnalytics_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
   frontend:
     build:
@@ -61,4 +80,5 @@ networks:
     driver: bridge
 
 volumes:
+  redis_data:
   postgres_data:

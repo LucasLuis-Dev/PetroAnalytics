@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import Optional
-
-from app.database import get_db
+from app.utils.cache import cache_response
+from app.db.database import get_db
 from app.schemas.fuel_record import FuelRecordCreate, FuelRecordResponse, FuelRecordList
 from app.schemas.filter_options import FilterOptions
 from app.schemas.fuel_summary import FuelSummary
@@ -29,6 +29,7 @@ def create_fuel_record(
     "/", 
     response_model=FuelRecordList
 )
+@cache_response("fuelRecord:list", ttl=300)
 def list_fuel_records(
     page: int = 1,
     page_size: int = 10,
@@ -54,6 +55,7 @@ def list_fuel_records(
     response_model=FilterOptions, 
     summary="Get available filter options"
 )
+@cache_response("fuelRecord:filter-options", ttl=300)
 def get_filter_options(db: Session = Depends(get_db)):
     return FuelRecordService.get_filter_options(db)
 
@@ -63,6 +65,7 @@ def get_filter_options(db: Session = Depends(get_db)):
     response_model=FuelSummary, 
     summary="Fuel summary with filters"
 )
+@cache_response("fuelRecord:summary", ttl=300)
 def get_fuel_summary(
     fuel_type: Optional[str] = None,
     city: Optional[str] = None,

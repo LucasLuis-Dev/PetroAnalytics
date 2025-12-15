@@ -3,14 +3,12 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from app.database import Base 
+from app.db.database import Base 
 from app.models.fuel_record import FuelRecord 
+from app.config.config import settings
 
 import os
-from dotenv import load_dotenv
 
-
-load_dotenv()
 
 
 from alembic import context
@@ -36,7 +34,7 @@ target_metadata = Base.metadata
 # ... etc.
 
 def get_url():
-    return os.getenv("DATABASE_URL")
+    return settings.DATABASE_URL
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

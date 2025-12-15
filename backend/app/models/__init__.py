@@ -1,4 +1,4 @@
-from app.database import Base
+from app.db.database import Base
 from app.models.user import User
 from app.models.fuel_record import FuelRecord
 

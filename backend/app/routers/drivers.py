@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
+from app.utils.cache import cache_response
 from typing import Optional
-from app.database import get_db
+from app.db.database import get_db
 from app.schemas.driver import DriverList, DriverHistoryFilter
 from app.services.driver_service import DriverService
 from app.schemas.fuel_record import FuelRecordResponse, FuelRecordList
@@ -14,6 +14,7 @@ router = APIRouter()
     response_model=DriverList,
     summary="List all drivers",
 )
+@cache_response("drivers:all", ttl=300)
 def list_drivers(
     search: Optional[str] = None,
     page: int = 1,
@@ -32,6 +33,7 @@ def list_drivers(
     response_model=FuelRecordList, 
     summary="Driver fueling history report"
 )
+@cache_response("drivers:history", ttl=300)
 def get_driver_history(
     filters: DriverHistoryFilter = Depends(),
     page: int = 1,

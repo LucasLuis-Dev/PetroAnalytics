@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.user import UserCreate, UserRead, Token
 from app.core.security import hash_password, verify_password, create_access_token
-from app.config import settings
+from app.config.config import settings
 
 logger = logging.getLogger("petroanalytics.auth")
 

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from sqlalchemy.sql import func
-from app.database import Base
+from app.db.database import Base
 
 class FuelRecord(Base):
     __tablename__ = "fuel_records"

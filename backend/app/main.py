@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import logging
-from app.config import settings
+from app.config.config import settings
+from app.config.redis import redis_client
 from app.core.logging_config import setup_logging
 from app.core.middleware import request_logger_middleware
 from app.dependencies.auth import get_current_active_user
-from app.exception_handlers import add_exception_handlers
+from app.core.exception_handlers import add_exception_handlers
 
 from app.routers.fuel_record import router as fuel_router
 from app.routers.kpis import router as kpis_router
@@ -37,8 +38,6 @@ app.include_router(kpis_router, prefix="/api/kpis", tags=["KPIs"], dependencies=
 app.include_router(drivers_router, prefix="/api/drivers", tags=["Drivers"], dependencies=[Depends(get_current_active_user)])
 app.include_router(auth_router, prefix="/api/auth", tags=["Auth"])
 
-
-
 @app.get("/")
 def root():
     return {
@@ -50,4 +49,13 @@ def root():
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy"}
+    try:
+        redis_client.ping()
+        redis_status = "ok"
+    except Exception:
+        redis_status = "unavailable"
+    
+    return {
+        "status": "ok",   
+        "redis": redis_status  
+    }

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from app.database import get_db
+from app.utils.cache import cache_response
+from app.db.database import get_db
 from app.schemas.kpi import FuelPriceAverageList, VehicleVolumeTotalList, StateVolumeList, TopStationVolumeList
 from app.services.kpi_service import KPIService
 
@@ -12,6 +12,7 @@ router = APIRouter()
     response_model=FuelPriceAverageList,
     summary="Average fuel price by fuel type",
 )
+@cache_response("kpi:fuel-price-averages", ttl=300)
 def fuel_price_averages(
     fuel_type: str | None = None,
     state: str | None = None,
@@ -30,6 +31,7 @@ def fuel_price_averages(
     response_model=VehicleVolumeTotalList,
     summary="Total volume consumed by vehicle type",
 )
+@cache_response("kpi:vehicle-volume-totals", ttl=300)
 def vehicle_volume_totals(
     fuel_type: str | None = None,
     state: str | None = None,
@@ -48,6 +50,7 @@ def vehicle_volume_totals(
     response_model=StateVolumeList,
     summary="Total volume consumed per state",
 )
+@cache_response("kpi:state-volumes", ttl=300)
 def state_volumes(
     fuel_type: str | None = None,
     state: str | None = None,
@@ -65,6 +68,7 @@ def state_volumes(
     response_model=TopStationVolumeList,
     summary="Top 5 stations by total volume",
 )
+@cache_response("kpi:top-stations-by-volume", ttl=300)
 def top_stations_by_volume(
     fuel_type: str | None = None,
     state: str | None = None,
