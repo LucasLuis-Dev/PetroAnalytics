@@ -24,5 +24,6 @@ class Settings(BaseSettings):
     SEED_EMAIL: str
     SEED_PASSWORD: str
     REDIS_URL: str
+    ENABLE_REDIS: bool
 
 settings = Settings()

@@ -12,7 +12,11 @@ class RedisConfig:
     
     @classmethod
     def get_redis(cls) -> Redis:
-        """Singleton para conexão Redis com connection pooling"""
+
+        if not settings.ENABLE_REDIS:
+            logger.warning("Redis is disabled via ENABLE_REDIS=false")
+            return None
+
         if cls._instance is None:
             redis_url = settings.REDIS_URL
             
