@@ -17,7 +17,7 @@ router = APIRouter()
     response_model=FuelRecordResponse, 
     status_code=201
 )
-def create_fuel_record(
+async def create_fuel_record(
     payload: FuelRecordCreate,
     db: Session = Depends(get_db),
 ):
@@ -30,7 +30,7 @@ def create_fuel_record(
     response_model=FuelRecordList
 )
 @cache_response("fuelRecord:list", ttl=300)
-def list_fuel_records(
+async def list_fuel_records(
     page: int = 1,
     page_size: int = 10,
     fuel_type: Optional[str] = None,
@@ -56,7 +56,7 @@ def list_fuel_records(
     summary="Get available filter options"
 )
 @cache_response("fuelRecord:filter-options", ttl=300)
-def get_filter_options(db: Session = Depends(get_db)):
+async def get_filter_options(db: Session = Depends(get_db)):
     return FuelRecordService.get_filter_options(db)
 
 
@@ -66,7 +66,7 @@ def get_filter_options(db: Session = Depends(get_db)):
     summary="Fuel summary with filters"
 )
 @cache_response("fuelRecord:summary", ttl=300)
-def get_fuel_summary(
+async def get_fuel_summary(
     fuel_type: Optional[str] = None,
     city: Optional[str] = None,
     state: Optional[str] = None,

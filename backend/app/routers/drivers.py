@@ -15,7 +15,7 @@ router = APIRouter()
     summary="List all drivers",
 )
 @cache_response("drivers:all", ttl=300)
-def list_drivers(
+async def list_drivers(
     search: Optional[str] = None,
     page: int = 1,
     page_size: int = 10,
@@ -34,7 +34,7 @@ def list_drivers(
     summary="Driver fueling history report"
 )
 @cache_response("drivers:history", ttl=300)
-def get_driver_history(
+async def get_driver_history(
     filters: DriverHistoryFilter = Depends(),
     page: int = 1,
     page_size: int = 10,

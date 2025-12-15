@@ -13,7 +13,7 @@ router = APIRouter()
     summary="Average fuel price by fuel type",
 )
 @cache_response("kpi:fuel-price-averages", ttl=300)
-def fuel_price_averages(
+async def fuel_price_averages(
     fuel_type: str | None = None,
     state: str | None = None,
     city: str | None = None,
@@ -32,7 +32,7 @@ def fuel_price_averages(
     summary="Total volume consumed by vehicle type",
 )
 @cache_response("kpi:vehicle-volume-totals", ttl=300)
-def vehicle_volume_totals(
+async def vehicle_volume_totals(
     fuel_type: str | None = None,
     state: str | None = None,
     city: str | None = None,
@@ -51,7 +51,7 @@ def vehicle_volume_totals(
     summary="Total volume consumed per state",
 )
 @cache_response("kpi:state-volumes", ttl=300)
-def state_volumes(
+async def state_volumes(
     fuel_type: str | None = None,
     state: str | None = None,
     city: str | None = None,
@@ -69,7 +69,7 @@ def state_volumes(
     summary="Top 5 stations by total volume",
 )
 @cache_response("kpi:top-stations-by-volume", ttl=300)
-def top_stations_by_volume(
+async def top_stations_by_volume(
     fuel_type: str | None = None,
     state: str | None = None,
     city: str | None = None,

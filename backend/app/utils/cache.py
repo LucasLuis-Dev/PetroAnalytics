@@ -4,22 +4,22 @@ import logging
 from functools import wraps
 from typing import Callable
 from sqlalchemy.orm import Session
-from fastapi.encoders import jsonable_encoder 
+from fastapi.encoders import jsonable_encoder
 from app.config.redis import redis_client
 
 logger = logging.getLogger("petroanalytics.cache")
 
 def cache_response(key_prefix: str, ttl: int = 300):
-    """    
+    """
     Args:
         key_prefix: Prefixo da chave no Redis
         ttl: Tempo de vida em segundos (padrão: 5 minutos)
     """
     def decorator(func: Callable):
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs):  # ✅ ASYNC!
             cache_params = {
-                k: v for k, v in kwargs.items() 
+                k: v for k, v in kwargs.items()
                 if not isinstance(v, Session) and k not in ['db', 'current_user']
             }
             
@@ -32,7 +32,7 @@ def cache_response(key_prefix: str, ttl: int = 300):
                 cached = redis_client.get(cache_key)
                 if cached:
                     logger.info(
-                        f"Cache hit prefix={key_prefix} hash={param_hash} ttl={ttl}"
+                        f"Cache hit prefix={key_prefix} hash={param_hash}"
                     )
                     return json.loads(cached)
             except Exception as e:
@@ -43,11 +43,11 @@ def cache_response(key_prefix: str, ttl: int = 300):
             logger.info(
                 f"Cache miss prefix={key_prefix} hash={param_hash} function={func.__name__}"
             )
-            result = func(*args, **kwargs)
+        
+            result = await func(*args, **kwargs)
             
             try:
                 json_compatible = jsonable_encoder(result)
-                
                 redis_client.setex(
                     cache_key,
                     ttl,
@@ -62,5 +62,6 @@ def cache_response(key_prefix: str, ttl: int = 300):
                 )
             
             return result
-        return wrapper
+        
+        return async_wrapper
     return decorator
