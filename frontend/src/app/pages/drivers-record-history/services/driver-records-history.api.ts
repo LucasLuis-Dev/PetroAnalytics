@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpService } from '../../../core/services/http.service';
+import { HttpService } from '../../../core/services/http/http.service';
 import { DriverSummaryResponse } from '../../../shared/models/driver-summary.model';
 import { FuelRecordsResponse } from '../../../shared/models/fuel-records.model';
 

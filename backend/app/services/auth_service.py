@@ -1,6 +1,7 @@
 from datetime import timedelta
 from typing import Optional
 
+from app.schemas.auth import AuthResponse
 from sqlalchemy.orm import Session
 
 from app.models.user import User
@@ -49,3 +50,12 @@ class AuthService:
             expires_delta=expires,
         )
         return Token(access_token=token_str, token_type="bearer")
+    
+    @staticmethod
+    def build_auth_response(user: User) -> AuthResponse:
+        token_str = AuthService.create_access_token_for_user(user).access_token
+        return AuthResponse(
+            access_token=token_str,
+            token_type="bearer",
+            user=UserRead.model_validate(user),
+        )

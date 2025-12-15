@@ -7,11 +7,18 @@
     </div>
 
 
-    <div class="user-info-box">
-        <p-avatar label="P" class="mr-2" size="xlarge" shape="circle" />
-        <div class="username-box">
-            <span>User</span>
-            <p class="sub-title">Administrador</p>
+    <div class="user-box" (click)="menu.toggle($event)">
+        <div class="user-content">
+            <p-avatar [label]="userInitial()" class="mr-2" size="xlarge" shape="circle" />
+            <div class="username-box">
+                <span>{{ firstName() }}</span>
+                <p class="sub-title">Administrador</p>
+            </div>
+
+            <fa-icon [icon]="faAngleDown"></fa-icon>
+
+            <p-tieredMenu styleClass="adjust-menu " #menu [model]="menuUsuarioItems" [popup]="true" />
         </div>
     </div>
 </div>
+

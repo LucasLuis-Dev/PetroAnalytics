@@ -1,0 +1,187 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="logo-container">
+        <fa-icon [icon]="faGasPump"></fa-icon>
+      </div>
+      <h1>PetroAnalytics</h1>
+      <p class="subtitle">Gestão inteligente de combustível</p>
+    </div>
+
+    @if (facade.errorMessage()) {
+        <p-message 
+            severity="error" 
+            class="error-banner">
+            {{facade.errorMessage()!}}
+        </p-message>
+    }
+    
+
+    <p-tabs value="0" (onChange)="onTabChange()">
+      <p-tablist>
+        <p-tab value="0">Entrar</p-tab>
+        <p-tab value="1">Criar Conta</p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+
+        <!-- Panel Login -->
+        <p-tabpanel value="0">
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form">
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <p-iconfield>
+                    <p-inputicon class="pi pi-envelope" />
+                    <input
+                        id="login-email"
+                        type="email"
+                        pInputText
+                        formControlName="email"
+                        placeholder="seu@email.com"
+                        class="w-full"
+                        [class.ng-invalid]="loginEmail?.invalid && loginEmail?.touched" />
+                 </p-iconfield>
+                @if (loginEmail?.invalid && loginEmail?.touched) {
+                    <small class="error-message">
+                        Email inválido
+                    </small>
+                }              
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">Senha</label>
+              <p-iconfield>
+                    <p-inputicon class="pi pi-lock" />
+                    <p-password
+                        id="login-password"
+                        formControlName="password"
+                        placeholder="••••••••"
+                        [toggleMask]="true"
+                        [feedback]="false"
+                        class="w-full"
+                        [class.ng-invalid]="loginPassword?.invalid && loginPassword?.touched">
+                    </p-password>
+                </p-iconfield>
+                @if (loginPassword?.invalid && loginPassword?.touched) {
+                    <small class="error-message">
+                        Senha deve ter no mínimo 6 caracteres
+                    </small>
+                }
+            </div>
+
+            
+            @if (!facade.loading()) {
+                <button
+                    type="submit"
+                    label="Entrar"
+                    class="submit-button"
+                   >
+                   Entrar
+                </button>
+            } @else {
+                <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s" [style]="{ width: '35px', height: '50px' }" />
+            }
+          </form>
+        </p-tabpanel>
+
+        <!-- Panel Register -->
+        <p-tabpanel value="1">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="auth-form">
+            <div class="form-group">
+              <label for="register-name">Nome</label>
+              <p-iconfield>
+                    <p-inputicon class="pi pi-user" />
+                    <input
+                        id="register-name"
+                        type="text"
+                        pInputText
+                        formControlName="name"
+                        placeholder="Seu nome completo"
+                        class="w-full"
+                        [class.ng-invalid]="registerName?.invalid && registerName?.touched" />
+                 </p-iconfield>
+                @if (loginEmail?.invalid && loginEmail?.touched) {
+                    <small class="error-message">
+                        Nome deve ter no mínimo 3 caracteres
+                    </small>
+                }    
+            </div>
+
+            <div class="form-group">
+              <label for="register-email">Email</label>
+                <p-iconfield>
+                    <p-inputicon class="pi pi-envelope" />
+                    <input
+                        id="register-email"
+                        type="email"
+                        pInputText
+                        formControlName="email"
+                        placeholder="seu@email.com"
+                        class="w-full"
+                        [class.ng-invalid]="registerEmail?.invalid && registerEmail?.touched" />
+                 </p-iconfield>
+                @if (registerEmail?.invalid && registerEmail?.touched) {
+                    <small class="error-message">
+                        Email inválido
+                    </small>
+                }   
+            </div>
+
+            <div class="form-group">
+              <label for="register-password">Senha</label>
+              <p-iconfield>
+                    <p-inputicon class="pi pi-lock" />
+                    <p-password
+                        id="register-password"
+                        formControlName="password"
+                        placeholder="••••••••"
+                        [toggleMask]="true"
+                        class="w-full"
+                        [class.ng-invalid]="registerPassword?.invalid && registerPassword?.touched">
+                    </p-password>
+                </p-iconfield>
+                @if (registerPassword?.invalid && registerPassword?.touched) {
+                    <small class="error-message">
+                        Senha deve ter no mínimo 6 caracteres
+                    </small>
+                }
+            </div>
+
+            <div class="form-group">
+              <label for="register-confirm-password">Confirmar Senha</label>
+              <p-iconfield>
+                    <p-inputicon class="pi pi-lock" />
+                    <p-password
+                        id="register-confirm-password"
+                        formControlName="confirmPassword"
+                        placeholder="••••••••"
+                        [feedback]="false"
+                        [toggleMask]="true"
+                        class="w-full"
+                        [class.ng-invalid]="registerConfirmPassword?.invalid && registerConfirmPassword?.touched">
+                    </p-password>
+                </p-iconfield>
+                @if (registerConfirmPassword?.invalid && registerConfirmPassword?.touched) {
+                    <small class="error-message">
+                        Confirme sua senha
+                    </small>
+                }
+            </div>
+
+            @if (!facade.loading()) {
+                <button
+                    type="submit"
+                   
+                    class="submit-button"
+                    >
+                    Criar Conta
+                </button>
+            } @else {
+                <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s" [style]="{ width: '35px', height: '50px' }" />
+            }
+          </form>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</div>

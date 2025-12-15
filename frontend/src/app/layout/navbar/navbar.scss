@@ -28,10 +28,31 @@
         }
     }
 
-    & .user-info-box {
+    & .user-box {
         display: flex;
         gap: 1rem;
         align-items: center;
+        padding: .1rem;
+        padding-left: 1rem;
+        cursor: pointer;
+        border-left: .1rem solid $border-color;
+
+
+        & .user-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 1rem;
+            border: .2rem solid transparent;
+            transition: all 150ms;
+
+            &:hover {
+                background-color: #edeff3cc;
+            }
+        }
+
 
         & .username-box {
             display: flex;
@@ -39,6 +60,11 @@
 
             & span {
                 font-weight: 500;
+                color: $text-color;
+            }
+
+            & p {
+                color: $text-color-secondary;
             }
         }
     }
@@ -46,5 +72,10 @@
     & .sub-title {
         font-weight: 300;
         font-size: 1.3rem;
+        color: $text-color-secondary;
+    } 
+    
+    .adjust-menu {
+        margin-left: 1.3rem !important;
     }
 }
