@@ -2,7 +2,13 @@
   <div class="stats-card-content">
     <div class="stats-info">
       <h3 class="stats-title">{{ title }}</h3>
-      <p class="stats-value">{{ value }}</p>
+
+      @if (!loading) {
+        <p class="stats-value">{{ value }}</p>
+      } @else {
+        <p-skeleton width="45%" height="3.5rem" class="mb-2" />
+      }
+ 
       
       <!-- @if (change) {
         <div class="stats-change">

@@ -1,5 +1,9 @@
 <div id="container">
     <div class="logo-box"> 
+        <div class="logo-icon-box">
+            <fa-icon [icon]="faChartSimple"></fa-icon>
+        </div>
+        
         <div class="logo-name-box">
             <span>PetroAnalytics</span>
             <p class="sub-title">Gestão de Combustível</p>
@@ -7,17 +11,17 @@
     </div>
 
 
-    <div class="user-box" (click)="menu.toggle($event)">
+    <div class="user-box" >
         <div class="user-content">
             <p-avatar [label]="userInitial()" class="mr-2" size="xlarge" shape="circle" />
-            <div class="username-box">
+            <div class="username-box" >
                 <span>{{ firstName() }}</span>
                 <p class="sub-title">Administrador</p>
             </div>
 
-            <fa-icon [icon]="faAngleDown"></fa-icon>
-
-            <p-tieredMenu styleClass="adjust-menu " #menu [model]="menuUsuarioItems" [popup]="true" />
+            <div class="icon-box" (click)="authFacade.logout()">
+                <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
+            </div>
         </div>
     </div>
 </div>

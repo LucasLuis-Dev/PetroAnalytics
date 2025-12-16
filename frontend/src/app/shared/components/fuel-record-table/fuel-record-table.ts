@@ -8,6 +8,7 @@ import { FontAwesomeModule, IconDefinition } from '@fortawesome/angular-fontawes
 import { faTable } from '@fortawesome/free-solid-svg-icons';
 import { FuelRecord } from '../../models/fuel-records.model';
 import { CardHeader } from '../card-header/card-header';
+import { SkeletonModule } from 'primeng/skeleton';
 
 export interface TableColumn {
   field: string;
@@ -27,7 +28,8 @@ export interface TableColumn {
     CardModule,
     ButtonModule,
     FontAwesomeModule,
-    CardHeader
+    CardHeader,
+    SkeletonModule
   ],
   templateUrl: './fuel-record-table.html',
   styleUrl: './fuel-record-table.scss',

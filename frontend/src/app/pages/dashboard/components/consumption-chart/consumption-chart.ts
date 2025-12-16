@@ -7,6 +7,8 @@ import { faPieChart } from '@fortawesome/free-solid-svg-icons';
 import { ChartLegend } from '../../../../shared/components/chart-legend/chart-legend';
 import { DashboardFacade } from '../../facades/dashboard.facade';
 import { CardHeader } from '../../../../shared/components/card-header/card-header';
+import { SkeletonModule } from 'primeng/skeleton';
+
 
 @Component({
   selector: 'app-consumption-chart',
@@ -16,7 +18,8 @@ import { CardHeader } from '../../../../shared/components/card-header/card-heade
     ChartModule, 
     ChartLegend,
     FontAwesomeModule,
-    CardHeader
+    CardHeader,
+    SkeletonModule
   ],
   templateUrl: './consumption-chart.html',
   styleUrl: './consumption-chart.scss',

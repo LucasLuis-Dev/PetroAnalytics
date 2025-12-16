@@ -5,7 +5,7 @@
     [subtitle]="'Média do preço por litro no período'">
   </app-card-header>
   
-  @if (chartData()) {
+  @if (!facade.loadingKpis()) {
     <div class="chart-container">
       <p-chart 
         type="bar" 
@@ -14,12 +14,9 @@
         height="400px">
       </p-chart>
     </div>
-  }
-  @else {
-    <ng-template #loading>
-      <div class="loading-state">
-        <p>Carregando dados...</p>
+  } @else {
+     <div class="loading-box">
+        <p-skeleton width="100%" height="100%" class="mb-2" />
       </div>
-    </ng-template>
-  }
+    }
 </p-card>

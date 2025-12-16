@@ -32,14 +32,25 @@
                     </div>
                 </div>
             }
+                <div class="paginator-box">
+                    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="facade.driverRecordsPageSize()" [totalRecords]="facade.driversTotal()"/>
+                </div>
         </div>
     }
     @else {
-        <ng-template #loadingTemplate>
-            <div class="loading-state">
-            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-            <p>Carregando motoristas...</p>
-            </div>
-        </ng-template>
+        <div class="drivers-list">
+            @for (item of [].constructor(20); track $index) {
+                <div class="driver-item skeleton-item">
+                    <div class="driver-info">
+                        <p-skeleton width="20%" height="1.5rem" style="margin-bottom: 1rem;" />
+                        <p-skeleton width="10%" height="1rem" />
+                    </div>
+                    <div class="driver-count">
+                        <p-skeleton width="150px" height="1.5rem" borderRadius="16px" />
+                    </div>
+                </div>
+            }
+        </div>
+
     } 
 </p-card>

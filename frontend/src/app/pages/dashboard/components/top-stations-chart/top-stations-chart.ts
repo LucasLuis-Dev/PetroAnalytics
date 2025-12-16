@@ -6,7 +6,7 @@ import { faGasPump } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardFacade } from '../../facades/dashboard.facade';
 import { CardHeader } from '../../../../shared/components/card-header/card-header';
-
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-top-stations-chart',
@@ -15,7 +15,8 @@ import { CardHeader } from '../../../../shared/components/card-header/card-heade
     CardModule,
     ChartModule,
     FontAwesomeModule,
-    CardHeader
+    CardHeader,
+    SkeletonModule
   ],
   templateUrl: './top-stations-chart.html',
   styleUrl: './top-stations-chart.scss',

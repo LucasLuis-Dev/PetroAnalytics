@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DashboardFilters } from './components/dashboard-filters/dashboard-filters';
 import { DashboardStats } from './components/dashboard-stats/dashboard-stats';
+import { Router } from '@angular/router';
 import { DashboardCharts } from './components/dashboard-charts/dashboard-charts';
 import { FuelRecordTable, TableColumn } from '../../shared/components/fuel-record-table/fuel-record-table';
 import { DashboardFacade } from './facades/dashboard.facade';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RouterLink } from '@angular/router';
 import { TablePageEvent } from 'primeng/table';
 
 @Component({
@@ -17,12 +17,12 @@ import { TablePageEvent } from 'primeng/table';
     DashboardCharts, 
     FuelRecordTable, 
     FontAwesomeModule,
-    RouterLink,  
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export class Dashboard implements OnInit {
+  router = inject(Router);
   facade = inject(DashboardFacade);
   faClockRotateLeft = faClockRotateLeft;
 
@@ -74,8 +74,13 @@ export class Dashboard implements OnInit {
   }
 
   ngOnInit(): void {
+    this.facade.clearFilters();
     this.facade.loadSummary();
     this.facade.loadKpis();
     this.facade.loadFuelRecords();
+  }
+
+  goToHistory() {
+    this.router.navigate(['/drivers/record-history']);
   }
 }

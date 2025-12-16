@@ -40,10 +40,10 @@ export class DashboardFacade {
   activeDrivers = signal(0);
   totalFillings = signal(0);
 
-  loadingKpis = signal(false);
-  loadingRecords = signal(false);
-  loadingFilterOptions = signal(false);
-  loadingSummary = signal(false);
+  loadingKpis = signal(true);
+  loadingRecords = signal(true);
+  loadingFilterOptions = signal(true);
+  loadingSummary = signal(true);
 
   filtersDashboard = signal<DashboardFilters>({});
 

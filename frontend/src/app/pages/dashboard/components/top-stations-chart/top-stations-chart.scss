@@ -1,7 +1,8 @@
 
 .chart-card-box {
   height: 100%;
-  
+   padding: .75rem;
+
   ::ng-deep .p-card-body {
     padding: 1.5rem;
   }
@@ -11,19 +12,13 @@
         padding: 0 1rem;
     }
 
-    & .loading-state {
-        height: 350px;
+    & .loading-box {
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        gap: 1rem;
-        
-        p {
-            margin: 0;
-            font-size: 0.875rem;
-        }
+        align-items: center;
+        height: 35rem;
     }
+
 
     ::ng-deep {
         .p-chart {

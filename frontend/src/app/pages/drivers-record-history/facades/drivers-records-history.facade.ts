@@ -17,7 +17,7 @@ export class DriverRecordsHistoryFacade {
   _driverRecords = signal<FuelRecord[]>([]);
   driverRecordsTotal = signal(0);
   driverRecordsPage = signal(1);
-  driverRecordsPageSize = signal(10);
+  driverRecordsPageSize = signal(20);
 
   driverRecords = computed<FuelRecordWithTotal[]>(() => {
     return this._driverRecords().map(record => ({
@@ -26,8 +26,8 @@ export class DriverRecordsHistoryFacade {
     }));
   });
   
-  loadingDrivers = signal(false);
-  loadingRecords = signal(false);
+  loadingDrivers = signal(true);
+  loadingRecords = signal(true);
 
   isSearchingByCpf = computed(() => {
     const term = this.searchTerm();
@@ -50,8 +50,10 @@ export class DriverRecordsHistoryFacade {
     return price * volume;
   }
 
-  loadDrivers(search?: string) {
+  loadDrivers(search?: string, page: number = this.driverRecordsPage(), pageSize: number = this.driverRecordsPageSize()) {
     this.loadingDrivers.set(true);
+    this.driverRecordsPage.set(page);
+    this.driverRecordsPageSize.set(pageSize);
 
     const params: { search?: string; page?: number; page_size?: number } = {};
   
@@ -59,8 +61,8 @@ export class DriverRecordsHistoryFacade {
       params.search = search;
     }
 
-    params.page = 1;
-    params.page_size = 20;  
+    params.page = this.driverRecordsPage();
+    params.page_size = this.driverRecordsPageSize();
 
     this.api.getDriversSummary(params).subscribe({
       next: res => {

@@ -18,4 +18,11 @@
         justify-content: center;
         margin-bottom: 1.5rem;
     }
+
+    & .loading-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 35rem;
+    }
 }

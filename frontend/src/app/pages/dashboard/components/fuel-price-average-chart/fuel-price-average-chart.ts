@@ -6,6 +6,7 @@ import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardFacade } from '../../facades/dashboard.facade';
 import { CardHeader } from '../../../../shared/components/card-header/card-header';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-fuel-price-average-chart',
@@ -14,7 +15,8 @@ import { CardHeader } from '../../../../shared/components/card-header/card-heade
     CardModule,
     ChartModule,
     FontAwesomeModule,
-    CardHeader
+    CardHeader,
+    SkeletonModule
   ],
   templateUrl: './fuel-price-average-chart.html',
   styleUrl: './fuel-price-average-chart.scss',

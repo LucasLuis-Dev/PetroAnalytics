@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { MessageModule } from 'primeng/message';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faGasPump, faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faUser, faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { AuthFacade } from './facades/auth.facade';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -36,7 +36,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class Auth {
   facade = inject(AuthFacade);
 
-  faGasPump = faGasPump;
+  faChartSimple = faChartSimple;
   faEnvelope = faEnvelope;
   faLock = faLock;
   faUser = faUser;

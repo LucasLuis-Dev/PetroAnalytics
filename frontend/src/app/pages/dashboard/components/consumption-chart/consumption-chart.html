@@ -4,15 +4,22 @@
     [title]="'Consumo por Tipo de Veículo'"
     [subtitle]="'Distribuição percentual'">
     </app-card-header>
-    
-    <div class="chart-container">
-        <p-chart 
-        type="doughnut" 
-        [data]="chartData()" 
-        [options]="chartOptions"
-        height="300px">
-        </p-chart>
-    </div>
 
-    <app-chart-legend [legendItems]="legendItems()"></app-chart-legend>
+    @if (!facade.loadingKpis()) {
+        <div class="chart-container">
+            <p-chart 
+            type="doughnut" 
+            [data]="chartData()" 
+            [options]="chartOptions"
+            height="300px">
+            </p-chart>
+        </div>
+
+        <app-chart-legend [legendItems]="legendItems()"></app-chart-legend>
+    } @else {
+        <div class="loading-box">
+            <p-skeleton width="100%" height="100%" class="mb-2" />
+        </div>
+    }
+    
 </p-card>

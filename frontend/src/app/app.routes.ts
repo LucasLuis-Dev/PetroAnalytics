@@ -5,8 +5,23 @@ import { Auth } from './pages/auth/auth';
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    { path: 'auth', component: Auth },
-    { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
-    { path: 'drivers/record-history', component: DriversRecordHistory, canActivate: [authGuard] }
+  { 
+    path: '', 
+    redirectTo: 'dashboard', 
+    pathMatch: 'full' 
+  },
+  { 
+    path: 'auth', 
+    loadComponent: () => import('./pages/auth/auth').then(m => m.Auth)
+  },
+  { 
+    path: 'dashboard', 
+    loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'drivers/record-history', 
+    loadComponent: () => import('./pages/drivers-record-history/drivers-record-history').then(m => m.DriversRecordHistory),
+    canActivate: [authGuard]
+  }
 ];

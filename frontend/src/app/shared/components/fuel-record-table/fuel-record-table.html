@@ -73,6 +73,22 @@
       </tr>
     </ng-template>
 
+    @if (data().length === 0) {
+      <ng-template pTemplate="loadingbody">
+      @for (column of columns(); track column.field) {
+        <tr>
+          @for (column of columns(); track column.field) {
+          <td>
+            <p-skeleton width="100%" height="2rem" />
+          </td>
+          }
+        </tr>
+      }
+      
+    </ng-template>
+    }
+    
+
     <ng-template pTemplate="emptymessage">
       <tr>
         <td [attr.colspan]="columns().length" class="text-center">
