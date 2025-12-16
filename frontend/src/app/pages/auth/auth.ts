@@ -78,7 +78,7 @@ export class Auth {
 
     const { name, email } = this.registerForm.value;
     this.facade.register({
-      name: name!,
+      full_name: name!,
       email: email!,
       password: password!,
       confirmPassword: confirmPassword!

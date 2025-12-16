@@ -47,8 +47,7 @@ export class AuthFacade {
 
         this.api.register(data).subscribe({
         next: (response) => {
-            this.authService.setAuth(response.access_token, response.user);
-            this.router.navigate(['/dashboard']);
+            window.location.reload();
         },
         error: (error) => {
             const message = error.error?.message || 'Erro ao criar conta. Tente novamente.';
