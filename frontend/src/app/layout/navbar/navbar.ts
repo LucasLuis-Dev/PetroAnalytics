@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { faChartSimple, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { AuthFacade } from '../../pages/auth/facades/auth.facade';
+import { AuthFacade } from '../../features/auth/facades/auth.facade';
 
 @Component({
   selector: 'app-navbar',

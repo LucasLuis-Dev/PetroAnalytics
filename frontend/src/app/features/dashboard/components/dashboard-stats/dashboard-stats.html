@@ -1,0 +1,12 @@
+<div class="dashboard-stats-grid-box" id="container">
+    @for (stat of stats(); track stat.title) {
+        <app-stats-card
+            [title]="stat.title"
+            [value]="stat.value"
+            [icon]="stat.icon"
+            [iconColor]="stat.iconColor"
+            [loading]="facade.loadingSummary()"
+        >
+        </app-stats-card>
+    }
+</div>

@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { Dashboard } from './pages/dashboard/dashboard';
-import { DriversRecordHistory } from './pages/drivers-record-history/drivers-record-history';
-import { Auth } from './pages/auth/auth';
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
@@ -11,17 +8,20 @@ export const routes: Routes = [
     pathMatch: 'full' 
   },
   { 
-    path: 'auth', 
-    loadComponent: () => import('./pages/auth/auth').then(m => m.Auth)
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.routes')
+      .then(m => m.AUTH_ROUTES)
   },
   { 
-    path: 'dashboard', 
-    loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+    path: 'dashboard',
+    loadChildren: () => import('./features/dashboard/dashboard.routes')
+      .then(m => m.DASHBOARD_ROUTES),
     canActivate: [authGuard]
   },
   { 
-    path: 'drivers/record-history', 
-    loadComponent: () => import('./pages/drivers-record-history/drivers-record-history').then(m => m.DriversRecordHistory),
+    path: 'drivers',
+    loadChildren: () => import('./features/drivers/drivers.routes')
+      .then(m => m.DRIVERS_ROUTES),
     canActivate: [authGuard]
   }
 ];

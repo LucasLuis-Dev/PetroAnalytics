@@ -1,0 +1,68 @@
+@use '../../../../../scss/abstracts/variables' as *;
+@use '../../../../../scss/abstracts/mixins' as *;
+
+#container {
+    display: flex;
+    flex-direction: column;
+    padding: 2% 10%;
+    padding-top: 12rem;
+    min-height: 100vh;
+    
+        & .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+    
+            & .back-button {
+                background: transparent;
+                border: .1rem solid transparent;
+                border-radius: 1rem;
+                width: 40px;
+                height: 40px;
+                transition: all 150ms;
+
+                &:hover {
+                    cursor: pointer;
+                    background: white;
+                    border: .1rem solid $border-color;
+                }
+            }
+    
+            & .header-icon {
+                width: 46px;
+                height: 46px;
+                background: $background-primary;
+                border-radius: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+    
+                & fa-icon {
+                    font-size: 1.75rem;
+                    color: white;
+                }
+            }
+    
+            & .header-text {
+                flex: 1;
+    
+                & h1 {
+                    font-size: 2.2rem;
+                    font-weight: 700;
+                    color: $text-color;
+                }
+    
+                & p {
+                    font-size: 1.1rem;
+                    margin: 0;
+                    color: $text-color-secondary;
+                }
+            }
+        }
+    
+        & .search-section {
+            margin-bottom: 1.5rem;
+        }
+}
+

@@ -1,0 +1,258 @@
+@use '../../../../../scss/abstracts/variables' as *;
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $background-primary;
+    padding: 2rem;
+
+
+    & .auth-card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 480px;
+        width: 100%;
+        padding: 3rem 2.5rem;
+    }
+
+    & .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        & .logo-container {
+            width: 80px;
+            height: 80px;
+            background: $background-primary;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 24px rgba(8, 145, 178, 0.3);
+
+            & fa-icon {
+                font-size: 2.5rem;
+                color: white;
+            }
+        }
+
+        & h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: $text-color;
+        }
+
+        & .subtitle {
+            font-size: 1.1rem;
+            color: $text-color-secondary;
+            margin: 0;
+        }
+    }
+
+    & .error-banner {
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
+
+        ::ng-deep {
+            .p-message {
+                border-radius: 12px;
+                padding: 1rem;
+
+                .p-message-wrapper {
+                    padding: 0;
+                }
+
+                .p-message-text {
+                    font-size: 0.875rem;
+                }
+            }
+        }
+    }
+
+    // Estilos para nova API de Tabs
+    ::ng-deep {
+        p-tabs {
+            .p-tablist {
+                background: #EDEFF3;
+                border: none !important;
+                border-radius: 1rem;
+                justify-content: center;
+                gap: 0;
+                margin-bottom: 1.5rem;
+                display: flex;
+                padding: .7rem;
+
+                .p-tablist-viewport,
+                .p-tablist-tab-list {
+                    border: none !important;
+                }
+
+                .p-tab {
+                    flex: 1;
+                    background: transparent;
+                    border-radius: 1rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: $text-color-secondary !important;
+                    border: none !important;
+                    font-size: 1.4rem !important;
+
+                    &-active {
+                        background-color: $input-background !important;
+                        color: $text-color !important;
+                    }
+
+                    button {
+                        width: 100%;
+                        background: #f1f5f9;
+                        border: none;
+                        padding: 0.875rem 1.5rem;
+                        color: #64748b;
+                        font-weight: 500;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            background: #e2e8f0;
+                            color: #475569;
+                        }
+                    }
+
+                    &:first-child button {
+                        border-radius: 12px 0 0 12px;
+                    }
+
+                    &:last-child button {
+                        border-radius: 0 12px 12px 0;
+                    }
+
+                    &[data-p-active="true"] button {
+                        background: #0891b2;
+                        color: white;
+                        box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+                    }
+                }
+
+                & .p-tablist-active-bar {
+                    display: none !important;
+                }
+            }
+
+            .p-tabpanels {
+                background: transparent;
+                padding: 0;
+                border: none;
+            }
+        }
+    }
+
+    & .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    & .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+
+        & label {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: $text-color;
+        }
+
+        & .input-icon {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        & .pi {
+            font-size: 1.5rem;
+            margin-top: -.8rem !important;
+        }
+
+        ::ng-deep .p-password {
+            & .p-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+                margin-top: -.8rem !important;
+            }
+        }
+
+        input,
+        ::ng-deep .p-password input {
+            padding-left: 3.3rem !important;
+            width: 100%;
+            height: 4rem;
+            border-radius: 1rem;
+            border: .1rem solid $border-color;
+            background-color: $input-background;
+            padding: 0.75rem 1rem;
+            font-size: 1.3rem;
+            transition: all 0.2s;
+
+
+
+            &:focus {
+                border-color: #0891b2;
+                box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+            }
+
+            &.ng-invalid.ng-touched {
+                border-color: #ef4444;
+            }
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+    }
+
+    & .submit-button {
+        width: 100%;
+        height: 4rem;
+        padding: 0.875rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        border-radius: 12px;
+        background: $background-primary;
+        color: white;
+        border: none;
+        margin-top: 0.5rem;
+        box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+        transition: all 0.2s;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.9;
+            background: $background-primary;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+    }
+
+
+
+    & .w-full {
+        width: 100%;
+    }
+
+    @media (max-width: 640px) {
+        .auth-card {
+            padding: 2rem 1.5rem;
+        }
+    }
+
+}
